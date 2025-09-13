@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Mail, Phone, Lock, Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast"; 
+import { Link, useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
 import api from "../../../utils/api";
 
@@ -16,7 +16,7 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   const passwordValue = watch("password", "");
 
   const onSubmit = async (data) => {
@@ -31,6 +31,7 @@ const Signup = () => {
         .then((res) => {
           console.log(res.data);
           toast.success("Account created successfully!");
+          navigate("/complete-profile")
         });
     } catch (err) {
       toast.error(err?.response?.data?.message || "Server error");

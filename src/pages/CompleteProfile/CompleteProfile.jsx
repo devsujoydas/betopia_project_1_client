@@ -2,11 +2,16 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import toast, { Toaster } from "react-hot-toast";
+import { Check } from "lucide-react";
 import api from "../../utils/api";
 
-const steps = ["Personal", "Contact", "Financial"];
+const steps = [
+  { id: 1, label: "Personal" },
+  { id: 2, label: "Contact" },
+  { id: 3, label: "Financial" },
+];
 
-const ProfileCompletion = () => {
+const CompleteProfile = () => {
   const [step, setStep] = useState(1);
   const {
     register,
@@ -17,7 +22,6 @@ const ProfileCompletion = () => {
   const onSubmit = async (data) => {
     try {
       const payload = {};
-
       if (step === 1) {
         payload.personalInfo = {
           firstName: data.firstName,
@@ -25,6 +29,8 @@ const ProfileCompletion = () => {
           dob: data.dob,
           gender: data.gender,
         };
+        await api.put("/users/update-profile", payload);
+        toast.success("Personal Info updated successfully!");
         setStep(2);
       } else if (step === 2) {
         payload.contactInfo = {
@@ -33,6 +39,8 @@ const ProfileCompletion = () => {
           state: data.state,
           zip: data.zip,
         };
+        await api.put("/users/update-profile", payload);
+        toast.success("Contact Info updated successfully!");
         setStep(3);
       } else if (step === 3) {
         payload.financialInfo = {
@@ -43,48 +51,13 @@ const ProfileCompletion = () => {
           existingLoan: data.existingLoan,
           shareData: data.shareData,
         };
-
-        await api.post("/api/users/update", payload);
+        await api.put("/users/update-profile", payload);
         toast.success("Profile updated successfully!");
       }
     } catch (err) {
       toast.error(err?.response?.data?.message || "Server error");
     }
   };
-
-  const renderProgress = () => (
-    <div className="flex items-center justify-between mb-8 relative">
-      {steps.map((label, index) => {
-        const current = index + 1;
-        const isCompleted = step > current;
-        const isActive = step === current;
-
-        return (
-          <div key={index} className="flex-1 flex flex-col items-center">
-            <div
-              className={`w-10 h-10 flex items-center justify-center rounded-full text-white 
-                ${isCompleted ? "bg-green-500" : isActive ? "bg-[#4B1E2F]" : "bg-gray-300"}`}
-            >
-              {isCompleted ? "✓" : current}
-            </div>
-            <p
-              className={`text-sm mt-2 ${
-                isActive ? "text-[#4B1E2F] font-semibold" : "text-gray-500"
-              }`}
-            >
-              {label}
-            </p>
-            {index < steps.length - 1 && (
-              <div
-                className={`absolute -z-10 top-5 left-[calc(33.3%*${index + 1})] w-1/3 h-0.5 
-                ${step > current ? "bg-green-500" : "bg-gray-300"}`}
-              ></div>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
 
   return (
     <div className="flex justify-center items-center h-[100dvh]">
@@ -95,134 +68,225 @@ const ProfileCompletion = () => {
         className="rounded-2xl border border-zinc-200 shadow-md p-8 xl:w-[1000px] w-full"
       >
         <Toaster position="top-right" />
-
         <h1 className="text-2xl font-bold text-[#4B1E2F] mb-2">
           Complete Your Profile
         </h1>
         <p className="text-gray-600 mb-6">
-          Please provide accurate information to get the most accurate credit rating
+          Please provide accurate information to get the most accurate credit
+          rating
         </p>
 
-        {renderProgress()}
+        {/* Stepper */}
+        <div className="flex items-center justify-between mb-10 relative">
+          {steps.map((s, idx) => (
+            <div
+              key={s.id}
+              className="flex-1 flex flex-col items-center relative"
+            >
+              {/* Circle */}
+              <div
+                className={`w-10 h-10  rounded-full flex items-center justify-center 
+                  ${
+                    step > s.id
+                      ? "bg-[#4B1E2F] text-white"
+                      : step === s.id
+                      ? "border-2 bg-white border-[#4B1E2F] text-[#4B1E2F]"
+                      : "border-2 bg-[#83787c] border-gray-300 text-gray-200"
+                  }`}
+              >
+                {step > s.id ? <Check size={18} /> : s.id}
+              </div>
+
+              {/* Label */}
+              <p
+                className={`text-sm mt-2 ${
+                  step >= s.id ? "text-[#4B1E2F]" : "text-gray-400"
+                }`}
+              >
+                {s.label}
+              </p>
+
+              {/* Progress line */}
+              {idx < steps.length - 1 && (
+                <div
+                  className={`absolute top-5 left-1/2 w-full h-0.5 -z-10 ${
+                    step > s.id ? "bg-[#4B1E2F]" : "bg-gray-300"
+                  }`}
+                />
+              )}
+            </div>
+          ))}
+        </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
+          {/* Step 1 */}
           {step === 1 && (
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="font-semibold text-sm">First Name</label>
-                <input
-                  className="border w-full p-3 rounded-md mt-1"
-                  {...register("firstName", { required: true })}
-                />
-                {errors.firstName && <p className="text-red-500 text-sm">Required</p>}
-              </div>
-              <div>
-                <label className="font-semibold text-sm">Last Name</label>
-                <input
-                  className="border w-full p-3 rounded-md mt-1"
-                  {...register("lastName", { required: true })}
-                />
-                {errors.lastName && <p className="text-red-500 text-sm">Required</p>}
-              </div>
-              <div>
-                <label className="font-semibold text-sm">Date of Birth</label>
-                <input
-                  type="date"
-                  className="border w-full p-3 rounded-md mt-1"
-                  {...register("dob", { required: true })}
-                />
-                {errors.dob && <p className="text-red-500 text-sm">Required</p>}
-              </div>
-              <div>
-                <label className="font-semibold text-sm">Gender</label>
-                <select
-                  className="border w-full p-3 rounded-md mt-1"
-                  {...register("gender", { required: true })}
-                >
-                  <option value="">Select</option>
-                  <option>Male</option>
-                  <option>Female</option>
-                  <option>Other</option>
-                </select>
-                {errors.gender && <p className="text-red-500 text-sm">Required</p>}
+            <div className="text-sm">
+              <h1 className="text-[#4B1E2F] text-md font-semibold mb-4">
+                Personal Information
+              </h1>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm">First Name</label>
+                  <input
+                    {...register("firstName", { required: true })}
+                    className="border outline-none w-full p-3 rounded-md mt-1"
+                    placeholder="Enter your first name"
+                  />
+                  {errors.firstName && (
+                    <p className="text-red-500 text-sm">Required</p>
+                  )}
+                </div>
+                <div>
+                  <label className="text-sm">Last Name</label>
+                  <input
+                    {...register("lastName", { required: true })}
+                    className="border outline-none w-full p-3 rounded-md mt-1"
+                    placeholder="Enter your last name"
+                  />
+                  {errors.lastName && (
+                    <p className="text-red-500 text-sm">Required</p>
+                  )}
+                </div>
+                <div>
+                  <label className="text-sm">Date of Birth</label>
+                  <input
+                    {...register("dob", { required: true })}
+                    type="date"
+                    className="border outline-none w-full p-3 rounded-md mt-1"
+                  />
+                  {errors.dob && (
+                    <p className="text-red-500 text-sm">Required</p>
+                  )}
+                </div>
+                <div>
+                  <label className="text-sm">Gender</label>
+                  <select
+                    {...register("gender", { required: true })}
+                    className="border outline-none w-full p-3 rounded-md mt-1"
+                  >
+                    <option value="">Select</option>
+                    <option>male</option>
+                    <option>female</option>
+                    <option>other</option>
+                  </select>
+                  {errors.gender && (
+                    <p className="text-red-500 text-sm">Required</p>
+                  )}
+                </div>
               </div>
             </div>
           )}
 
+          {/* Step 2 */}
           {step === 2 && (
-            <div className="space-y-4">
+            <div className="space-y-4 text-sm font-medium">
+              <h1 className="text-[#4B1E2F] text-md font-semibold mb-4">
+                Contact Information
+              </h1>
               <div>
-                <label className="font-semibold text-sm">Address</label>
+                <label className="">Address</label>
                 <input
-                  className="border w-full p-3 rounded-md mt-1"
                   {...register("address", { required: true })}
+                  placeholder="Address"
+                  className="border w-full p-3 rounded-md mt-1"
                 />
               </div>
               <div className="grid grid-cols-3 gap-4">
-                <input
-                  placeholder="City"
-                  className="border p-3 rounded-md"
-                  {...register("city", { required: true })}
-                />
-                <input
-                  placeholder="State"
-                  className="border p-3 rounded-md"
-                  {...register("state", { required: true })}
-                />
-                <input
-                  placeholder="Zip"
-                  className="border p-3 rounded-md"
-                  {...register("zip", { required: true })}
-                />
+                <div className="grid gap-1">
+                  <label className="">City</label>
+                  <input
+                    {...register("city", { required: true })}
+                    placeholder="City"
+                    className="border p-3 rounded-md"
+                  />
+                </div>
+                <div className="grid gap-1">
+                  <label className="">State</label>
+                  <input
+                    {...register("state", { required: true })}
+                    placeholder="State"
+                    className="border p-3 rounded-md"
+                  />
+                </div>
+                <div className="grid gap-1">
+                  <label className="">Zip</label>
+                  <input
+                    {...register("zip", { required: true })}
+                    placeholder="Zip"
+                    className="border p-3 rounded-md"
+                  />
+                </div>
               </div>
             </div>
           )}
 
+          {/* Step 3 */}
           {step === 3 && (
             <div className="space-y-4">
-              <h2 className="text-xl font-semibold text-[#4B1E2F] mb-4">Financial Information</h2>
-              <div className="grid grid-cols-2 gap-4">
+              <h1 className="text-[#4B1E2F] text-md font-semibold mb-4">
+                Financial Information
+              </h1>
+              <div className="grid grid-cols-2 gap-5">
                 <div>
-                  <label className="font-semibold text-sm">Annual Income (FCFA)</label>
+                  <label className="text-sm font-medium">Annual Income (FCFA)</label>
                   <input
-                    className="border w-full p-3 rounded-md mt-1"
                     {...register("annualIncome", { required: true })}
+                    className="border w-full p-3 rounded-md mt-1"
                   />
-                  {errors.annualIncome && <p className="text-red-500 text-sm">Required</p>}
+                  {errors.annualIncome && (
+                    <p className="text-red-500 text-sm">Required</p>
+                  )}
                 </div>
                 <div>
-                  <label className="font-semibold text-sm">Value of Land Ownership (FCFA)</label>
+                  <label className="text-sm font-medium">Land Value of Ownership (FCFA)</label>
                   <input
-                    className="border w-full p-3 rounded-md mt-1"
                     {...register("landValue", { required: true })}
+                    className="border w-full p-3 rounded-md mt-1"
                   />
-                  {errors.landValue && <p className="text-red-500 text-sm">Required</p>}
+                  {errors.landValue && (
+                    <p className="text-red-500 text-sm">Required</p>
+                  )}
                 </div>
                 <div>
-                  <label className="font-semibold text-sm">Electricity Bill (FCFA)</label>
+                  <label className="text-sm font-medium">Electricity Bill (FCFA)</label>
                   <input
-                    className="border w-full p-3 rounded-md mt-1"
                     {...register("electricityBill", { required: true })}
+                    className="border w-full p-3 rounded-md mt-1"
                   />
-                  {errors.electricityBill && <p className="text-red-500 text-sm">Required</p>}
+                  {errors.electricityBill && (
+                    <p className="text-red-500 text-sm">Required</p>
+                  )}
                 </div>
                 <div>
-                  <label className="font-semibold text-sm">Mobile Money Balance (FCFA)</label>
+                  <label className="text-sm font-medium">Mobile Money Balance (FCFA)</label>
                   <input
-                    className="border w-full p-3 rounded-md mt-1"
                     {...register("mobileMoney", { required: true })}
+                    className="border w-full p-3 rounded-md mt-1"
                   />
-                  {errors.mobileMoney && <p className="text-red-500 text-sm">Required</p>}
+                  {errors.mobileMoney && (
+                    <p className="text-red-500 text-sm">Required</p>
+                  )}
                 </div>
               </div>
 
               <div className="flex gap-4 items-center mt-2">
-                <label className="font-semibold">Existing Loan:</label>
+                <label className="text-sm font-medium">Existing Loan:</label>
                 <label>
-                  <input type="radio" value="Yes" {...register("existingLoan")} /> Yes
+                  <input
+                    type="radio"
+                    value="Yes"
+                    {...register("existingLoan")}
+                  />{" "}
+                  Yes
                 </label>
                 <label>
-                  <input type="radio" value="No" {...register("existingLoan")} /> No
+                  <input
+                    type="radio"
+                    value="No"
+                    {...register("existingLoan")}
+                  />{" "}
+                  No
                 </label>
               </div>
 
@@ -237,7 +301,10 @@ const ProfileCompletion = () => {
 
           <div className="flex justify-between mt-8">
             {step > 1 && (
-              <p className="text-gray-400 cursor-pointer" onClick={() => setStep(step - 1)}>
+              <p
+                className="text-gray-400 cursor-pointer"
+                onClick={() => setStep(step - 1)}
+              >
                 &lt; Back
               </p>
             )}
@@ -254,4 +321,4 @@ const ProfileCompletion = () => {
   );
 };
 
-export default ProfileCompletion;
+export default CompleteProfile;
