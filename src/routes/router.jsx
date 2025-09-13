@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../layout/Layout";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
-import Home from "../pages/Home/Home"; 
+import Home from "../pages/Home/Home";
 import Signup from "../pages/Authentication/Signup/Signup";
 import ResetPassword from "../pages/Authentication/ResetPassword/ResetPassword";
 import Auth from "../pages/Authentication/Auth";
@@ -10,6 +10,7 @@ import AccountSettings from "../pages/AccountSettings/AccountSettings";
 import Signin from "../pages/Authentication/Signin/Signin";
 import CompleteProfile from "../pages/CompleteProfile/CompleteProfile";
 import Account from "../pages/Account/Account";
+import ProtectedRoute from "./ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -29,8 +30,22 @@ const router = createBrowserRouter([
         ],
       },
 
-      { path: "account", element: <Account /> },
-      { path: "complete-profile", element: <CompleteProfile /> },
+      {
+        path: "account",
+        element: (
+          <ProtectedRoute>
+            <Account />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "complete-profile",
+        element: (
+          <ProtectedRoute>
+            <CompleteProfile />
+          </ProtectedRoute>
+        ),
+      },
       { path: "account-settings", element: <AccountSettings /> },
       { path: "about", element: <About /> },
     ],

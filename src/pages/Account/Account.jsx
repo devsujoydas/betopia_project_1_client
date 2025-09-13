@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useAuth } from "../../AuthProvider/authProvider";
+import { useForm } from "react-hook-form"; 
 import { Lock, Eye, EyeOff, User, LockIcon, LogOut } from "lucide-react";
 import api from "../../utils/api";
+import { motion } from "framer-motion";
+import { useAuth } from "../../AuthProvider/AuthProvider";
 
 const Account = () => {
   const { user, isLoading } = useAuth();
@@ -40,8 +41,7 @@ const Account = () => {
       </div>
     );
   }
-
-  // Update Profile
+ 
   const handleUpdateProfile = async () => {
     try {
       const payload = {
@@ -66,8 +66,7 @@ const Account = () => {
       alert("Failed to update profile.");
     }
   };
-
-  // Change Password
+ 
   const onSubmitPassword = async (data) => {
     try {
       await api.post("/auth/change-password", {
@@ -90,7 +89,12 @@ const Account = () => {
   return (
     <div className="max-w-screen-2xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-6">
       {/* Left Sidebar */}
-      <div className="md:w-4/12 h-fit bg-white rounded-lg shadow flex flex-col items-center space-y-4">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        className="md:w-4/12 h-fit bg-white rounded-lg shadow flex flex-col items-center space-y-4"
+      >
         <div className="flex w-full items-center gap-4 px-6">
           <div>
             <img
@@ -148,10 +152,15 @@ const Account = () => {
             <LogOut /> Sign Out
           </button>
         </div>
-      </div>
+      </motion.div>
 
       {/* Right Content */}
-      <div className="md:w-8/12 bg-white  shadow-md flex flex-col gap-4 border border-zinc-200 rounded-lg">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        className="md:w-8/12 bg-white  shadow-md flex flex-col gap-4 border border-zinc-200 rounded-lg"
+      >
         {/* Personal Info Tab */}
         {activeTab === "personal" && (
           <>
@@ -165,10 +174,17 @@ const Account = () => {
               </button>
             </div>
 
-            <div className="p-6">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="p-6"
+            >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
-                  <label className="font-light text-[#4B1E2F]">First Name</label>
+                  <label className="font-light text-[#4B1E2F]">
+                    First Name
+                  </label>
                   <input
                     type="text"
                     value={formData.firstName}
@@ -194,7 +210,9 @@ const Account = () => {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="font-light text-[#4B1E2F]">Phone Number</label>
+                  <label className="font-light text-[#4B1E2F]">
+                    Phone Number
+                  </label>
                   <input
                     type="text"
                     value={formData.phone}
@@ -207,7 +225,9 @@ const Account = () => {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="font-light text-[#4B1E2F]">Street Address</label>
+                  <label className="font-light text-[#4B1E2F]">
+                    Street Address
+                  </label>
                   <input
                     type="text"
                     value={formData.address}
@@ -247,7 +267,9 @@ const Account = () => {
                   </div>
 
                   <div>
-                    <label className="font-light text-[#4B1E2F]">ZIP Code</label>
+                    <label className="font-light text-[#4B1E2F]">
+                      ZIP Code
+                    </label>
                     <input
                       type="text"
                       value={formData.zipCode}
@@ -271,7 +293,7 @@ const Account = () => {
                   </button>
                 </div>
               )}
-            </div>
+            </motion.div>
           </>
         )}
 
@@ -284,98 +306,128 @@ const Account = () => {
             <div className="bg-[#F5F5F5] px-5 py-6">
               <h3 className="font-semibold text-lg">Security Settings</h3>
             </div>
-            <div className="px-5 pt-5 grid gap-5 text-[14px]">
-              <div>
-                <label className="text-[#4B1E2F] mb-1 block font-medium">
-                  Current Password
-                </label>
-                <div className="flex items-center gap-2 w-full border-2 border-zinc-300 rounded-md outline-none font-medium p-3.5 mt-2">
-                  <Lock className="text-zinc-400 w-5" />
-                  <input
-                    type={showCurrentPassword ? "text" : "password"}
-                    placeholder="Enter current password"
-                    {...register("currentPassword", {
-                      required: "Current password is required",
-                    })}
-                    className="w-full outline-none"
-                  />
-                  <span
-                    onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                    className="cursor-pointer"
-                  >
-                    {showCurrentPassword ? <Eye size={18} /> : <EyeOff size={18} />}
-                  </span>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+            >
+              <div className="px-5 pt-5 grid gap-5 text-[14px]">
+                <div>
+                  <label className="text-[#4B1E2F] mb-1 block font-medium">
+                    Current Password
+                  </label>
+                  <div className="flex items-center gap-2 w-full border-2 border-zinc-300 rounded-md outline-none font-medium p-3.5 mt-2">
+                    <Lock className="text-zinc-400 w-5" />
+                    <input
+                      type={showCurrentPassword ? "text" : "password"}
+                      placeholder="Enter current password"
+                      {...register("currentPassword", {
+                        required: "Current password is required",
+                      })}
+                      className="w-full outline-none"
+                    />
+                    <span
+                      onClick={() =>
+                        setShowCurrentPassword(!showCurrentPassword)
+                      }
+                      className="cursor-pointer"
+                    >
+                      {showCurrentPassword ? (
+                        <Eye size={18} />
+                      ) : (
+                        <EyeOff size={18} />
+                      )}
+                    </span>
+                  </div>
+                  {errors.currentPassword && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.currentPassword.message}
+                    </p>
+                  )}
                 </div>
-                {errors.currentPassword && (
-                  <p className="text-red-600 text-sm mt-1">
-                    {errors.currentPassword.message}
-                  </p>
-                )}
-              </div>
 
-              <div>
-                <label className="text-[#4B1E2F] mb-1 block font-medium">
-                  New Password
-                </label>
-                <div className="flex items-center gap-2 w-full border-2 border-zinc-300 rounded-md outline-none font-medium p-3.5 mt-2">
-                  <Lock className="text-zinc-400 w-5" />
-                  <input
-                    type={showNewPassword ? "text" : "password"}
-                    placeholder="Enter new password"
-                    {...register("newPassword", {
-                      required: "New password is required",
-                      minLength: { value: 8, message: "Password must be at least 8 characters" },
-                    })}
-                    className="w-full outline-none"
-                  />
-                  <span
-                    onClick={() => setShowNewPassword(!showNewPassword)}
-                    className="cursor-pointer"
-                  >
-                    {showNewPassword ? <Eye size={18} /> : <EyeOff size={18} />}
-                  </span>
+                <div>
+                  <label className="text-[#4B1E2F] mb-1 block font-medium">
+                    New Password
+                  </label>
+                  <div className="flex items-center gap-2 w-full border-2 border-zinc-300 rounded-md outline-none font-medium p-3.5 mt-2">
+                    <Lock className="text-zinc-400 w-5" />
+                    <input
+                      type={showNewPassword ? "text" : "password"}
+                      placeholder="Enter new password"
+                      {...register("newPassword", {
+                        required: "New password is required",
+                        minLength: {
+                          value: 8,
+                          message: "Password must be at least 8 characters",
+                        },
+                      })}
+                      className="w-full outline-none"
+                    />
+                    <span
+                      onClick={() => setShowNewPassword(!showNewPassword)}
+                      className="cursor-pointer"
+                    >
+                      {showNewPassword ? (
+                        <Eye size={18} />
+                      ) : (
+                        <EyeOff size={18} />
+                      )}
+                    </span>
+                  </div>
+                  {errors.newPassword && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.newPassword.message}
+                    </p>
+                  )}
                 </div>
-                {errors.newPassword && (
-                  <p className="text-red-600 text-sm mt-1">{errors.newPassword.message}</p>
-                )}
-              </div>
 
-              <div>
-                <label className="text-[#4B1E2F] mb-1 block font-medium">
-                  Confirm Password
-                </label>
-                <div className="flex items-center gap-2 w-full border-2 border-zinc-300 rounded-md outline-none font-medium p-3.5 mt-2">
-                  <Lock className="text-zinc-400 w-5" />
-                  <input
-                    type={showConfirmPassword ? "text" : "password"}
-                    placeholder="Confirm new password"
-                    {...register("confirmPassword", {
-                      required: "Confirm password is required",
-                      validate: (value) => value === newPassword || "Passwords do not match",
-                    })}
-                    className="w-full outline-none"
-                  />
-                  <span
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="cursor-pointer"
-                  >
-                    {showConfirmPassword ? <Eye size={18} /> : <EyeOff size={18} />}
-                  </span>
+                <div>
+                  <label className="text-[#4B1E2F] mb-1 block font-medium">
+                    Confirm Password
+                  </label>
+                  <div className="flex items-center gap-2 w-full border-2 border-zinc-300 rounded-md outline-none font-medium p-3.5 mt-2">
+                    <Lock className="text-zinc-400 w-5" />
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      placeholder="Confirm new password"
+                      {...register("confirmPassword", {
+                        required: "Confirm password is required",
+                        validate: (value) =>
+                          value === newPassword || "Passwords do not match",
+                      })}
+                      className="w-full outline-none"
+                    />
+                    <span
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                      className="cursor-pointer"
+                    >
+                      {showConfirmPassword ? (
+                        <Eye size={18} />
+                      ) : (
+                        <EyeOff size={18} />
+                      )}
+                    </span>
+                  </div>
+                  {errors.confirmPassword && (
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.confirmPassword.message}
+                    </p>
+                  )}
                 </div>
-                {errors.confirmPassword && (
-                  <p className="text-red-600 text-sm mt-1">{errors.confirmPassword.message}</p>
-                )}
               </div>
-            </div>
-            <div className="flex justify-center pb-5">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="bg-[#4B1E2F] text-white px-8 py-3 rounded-md hover:bg-white hover:text-[#4B1E2F] border border-transparent hover:border-black transition-all duration-300 cursor-pointer"
-              >
-                {isSubmitting ? "Saving..." : "Save Changes"}
-              </button>
-            </div>
+              <div className="flex justify-center py-5">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="bg-[#4B1E2F] text-white px-8 py-3 rounded-md hover:bg-white hover:text-[#4B1E2F] border border-transparent hover:border-black transition-all duration-300 cursor-pointer"
+                >
+                  {isSubmitting ? "Saving..." : "Save Changes"}
+                </button>
+              </div>
+            </motion.div>
           </form>
         )}
 
@@ -386,7 +438,7 @@ const Account = () => {
             <p>Loan status details will go here...</p>
           </div>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 };

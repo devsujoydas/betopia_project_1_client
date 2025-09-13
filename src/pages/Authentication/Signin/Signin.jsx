@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form"; 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast"; 
 import { motion } from "framer-motion";
 import api from "../../../utils/api";
 
 const Signin = () => {
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -25,6 +26,7 @@ const Signin = () => {
       .then(res=>{
         console.log(res)
         toast.success("Logged in successfully!");
+        navigate("/account")
       })
     } catch (err) {
       toast.error(err?.response?.data?.message || "Server error");
@@ -105,6 +107,7 @@ const Signin = () => {
               type="checkbox"
               className="w-4 h-4 accent-[#4B1E2F]"
               {...register("remember")}
+              required
             />
             Remember me
           </label>

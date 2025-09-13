@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import api from "../../../utils/api";
 
 const Signup = () => {
+  
   const {
     register,
     handleSubmit,

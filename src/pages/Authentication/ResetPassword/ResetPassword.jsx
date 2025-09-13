@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import api from "../../../utils/api";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const ResetPassword = () => {
   const [step, setStep] = useState(1);
@@ -22,8 +23,7 @@ const ResetPassword = () => {
     formState: { errors },
   } = useForm();
   const passwordValue = watch("password", "");
-
-  // Handle OTP input change
+ 
   const handleOtpChange = (value, index) => {
     if (/^[0-9]?$/.test(value)) {
       const newOtp = [...otp];
@@ -33,8 +33,7 @@ const ResetPassword = () => {
       if (value && index < 5) otpRefs.current[index + 1].focus();
     }
   };
-
-  // Handle OTP paste
+ 
   const handleOtpPaste = (e) => {
     const pasted = e.clipboardData.getData("Text").trim();
     if (/^\d{6}$/.test(pasted)) {
@@ -42,8 +41,7 @@ const ResetPassword = () => {
       otpRefs.current[5].focus();
     }
   };
-
-  // Step 1: Request OTP
+ 
   const handleRequestOtp = async (data) => {
     setLoading(true);
     try {
@@ -57,8 +55,7 @@ const ResetPassword = () => {
       setLoading(false);
     }
   };
-
-  // Step 2: Verify OTP
+ 
   const handleVerifyOtp = async () => {
     if (otp.join("").length < 6) {
       toast.error("Enter full OTP");
@@ -75,8 +72,7 @@ const ResetPassword = () => {
       setLoading(false);
     }
   };
-
-  // Step 3: Reset Password
+ 
   const handleResetPassword = async (data) => {
     if (otp.join("").length < 6) {
       toast.error("OTP missing");
@@ -103,7 +99,12 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="max-w-[500px] w-full xl:mx-auto mx-3 mt-10">
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      className="max-w-[500px] w-full xl:mx-auto mx-3 mt-10"
+    >
       <Toaster position="top-right" reverseOrder={false} />
       <form
         onSubmit={
@@ -173,70 +174,72 @@ const ResetPassword = () => {
         {/* Step 3: Reset Password */}
         {step === 3 && (
           <>
-            <div className="mb-4 relative">
-              <label className="text-primary font-semibold mb-1 block">
-                New Password
-              </label>
-              <div className="border flex items-center gap-2 p-3 rounded-md border-zinc-200 text-sm">
-                <Lock className="text-zinc-400 w-5" />
-                <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Enter new password"
-                  className="outline-none w-full"
-                  {...register("password", {
-                    required: "Password is required",
-                    minLength: {
-                      value: 8,
-                      message: "Password must be at least 8 characters",
-                    },
-                  })}
-                />
-                <span
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="cursor-pointer"
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </span>
+            <div>
+              <div className="mb-4 relative">
+                <label className="text-primary font-semibold mb-1 block">
+                  New Password
+                </label>
+                <div className="border flex items-center gap-2 p-3 rounded-md border-zinc-200 text-sm">
+                  <Lock className="text-zinc-400 w-5" />
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter new password"
+                    className="outline-none w-full"
+                    {...register("password", {
+                      required: "Password is required",
+                      minLength: {
+                        value: 8,
+                        message: "Password must be at least 8 characters",
+                      },
+                    })}
+                  />
+                  <span
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="cursor-pointer"
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </span>
+                </div>
+                {errors.password && (
+                  <p className="text-red-600 text-sm mt-1">
+                    {errors.password.message}
+                  </p>
+                )}
               </div>
-              {errors.password && (
-                <p className="text-red-600 text-sm mt-1">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
 
-            <div className="mb-4 relative">
-              <label className="text-primary font-semibold mb-1 block">
-                Confirm Password
-              </label>
-              <div className="border flex items-center gap-2 p-3 rounded-md border-zinc-200 text-sm">
-                <Lock className="text-zinc-400 w-5" />
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  placeholder="Confirm password"
-                  className="outline-none w-full"
-                  {...register("confirmPassword", {
-                    required: "Confirm Password is required",
-                    validate: (value) =>
-                      value === passwordValue || "Passwords do not match",
-                  })}
-                />
-                <span
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="cursor-pointer"
-                >
-                  {showConfirmPassword ? (
-                    <EyeOff size={18} />
-                  ) : (
-                    <Eye size={18} />
-                  )}
-                </span>
+              <div className="mb-4 relative">
+                <label className="text-primary font-semibold mb-1 block">
+                  Confirm Password
+                </label>
+                <div className="border flex items-center gap-2 p-3 rounded-md border-zinc-200 text-sm">
+                  <Lock className="text-zinc-400 w-5" />
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="Confirm password"
+                    className="outline-none w-full"
+                    {...register("confirmPassword", {
+                      required: "Confirm Password is required",
+                      validate: (value) =>
+                        value === passwordValue || "Passwords do not match",
+                    })}
+                  />
+                  <span
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="cursor-pointer"
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOff size={18} />
+                    ) : (
+                      <Eye size={18} />
+                    )}
+                  </span>
+                </div>
+                {errors.confirmPassword && (
+                  <p className="text-red-600 text-sm mt-1">
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
               </div>
-              {errors.confirmPassword && (
-                <p className="text-red-600 text-sm mt-1">
-                  {errors.confirmPassword.message}
-                </p>
-              )}
             </div>
           </>
         )}
@@ -250,23 +253,23 @@ const ResetPassword = () => {
           {loading
             ? "Please wait..."
             : step === 1
-            ? "Send OTP"  
+            ? "Send OTP"
             : step === 2
             ? "Verify OTP"
             : "Reset Password"}
         </button>
-        
-            <p className="text-center mt-3 text-sm text-gray-700">
-              Back to?{" "}
-              <Link
-                to="/auth/signin"
-                className="text-[#4B1E2F] font-medium underline"
-              >
-                Sign in
-              </Link>
-            </p>
+
+        <p className="text-center mt-3 text-sm text-gray-700">
+          Back to?{" "}
+          <Link
+            to="/auth/signin"
+            className="text-[#4B1E2F] font-medium underline"
+          >
+            Sign in
+          </Link>
+        </p>
       </form>
-    </div>
+    </motion.div>
   );
 };
 
