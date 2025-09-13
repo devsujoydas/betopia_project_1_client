@@ -9,6 +9,7 @@ import About from "../pages/About/About";
 import AccountSettings from "../pages/AccountSettings/AccountSettings";
 import Signin from "../pages/Authentication/Signin/Signin";
 import CompleteProfile from "../pages/CompleteProfile/CompleteProfile";
+import Account from "../pages/Account/Account";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
         ],
       },
 
+      { path: "account", element: <Account /> },
       { path: "complete-profile", element: <CompleteProfile /> },
       { path: "account-settings", element: <AccountSettings /> },
       { path: "about", element: <About /> },

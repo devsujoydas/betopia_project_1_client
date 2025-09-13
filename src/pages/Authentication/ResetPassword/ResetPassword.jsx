@@ -3,7 +3,7 @@ import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import api from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ResetPassword = () => {
   const [step, setStep] = useState(1);
@@ -92,7 +92,7 @@ const ResetPassword = () => {
       });
       toast.success("Password reset successfully!");
       toast.success("You can signin now.");
-      navigate("/auth/signin")
+      navigate("/auth/signin");
       setEmail("");
       setOtp(Array(6).fill(""));
     } catch (err) {
@@ -250,11 +250,21 @@ const ResetPassword = () => {
           {loading
             ? "Please wait..."
             : step === 1
-            ? "Send OTP"
+            ? "Send OTP"  
             : step === 2
             ? "Verify OTP"
             : "Reset Password"}
         </button>
+        
+            <p className="text-center mt-3 text-sm text-gray-700">
+              Back to?{" "}
+              <Link
+                to="/auth/signin"
+                className="text-[#4B1E2F] font-medium underline"
+              >
+                Sign in
+              </Link>
+            </p>
       </form>
     </div>
   );

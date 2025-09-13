@@ -7,7 +7,9 @@ const Layout = () => {
   return (
     <div className="font-poppins">
       <Header />
-      <Outlet />
+      <div className="min-h-[80dvh]">
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );
