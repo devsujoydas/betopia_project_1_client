@@ -8,8 +8,8 @@ import {
   HeartHandshake,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import HeadingPart from "../Home/HeadingPart";
 
-// Card Component
 const CoreValueCard = ({ icon: Icon, title, description, index }) => {
   return (
     <motion.div
@@ -17,20 +17,16 @@ const CoreValueCard = ({ icon: Icon, title, description, index }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay: index * 0.15 }}
-      
       className="border border-zinc-300 transition-all duration-500 hover:shadow-lg space-y-4 py-8 px-6 rounded-md text-center sm:text-left bg-white"
     >
-      {/* Icon */}
       <div className="bg-[#EDE9EA] w-fit p-3 rounded-full mx-auto sm:mx-0">
         <Icon className="w-6 h-6 text-[#4B1E2F]" />
       </div>
-
-      {/* Title */}
+ 
       <h1 className="text-lg sm:text-xl text-[#4B1E2F] font-semibold">
         {title}
       </h1>
-
-      {/* Description */}
+ 
       <p className="font-light text-sm sm:text-base text-gray-700 leading-relaxed">
         {description}
       </p>
@@ -81,21 +77,12 @@ const OurCoreValues = () => {
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4 py-5 md:py-20 space-y-6 md:space-y-20">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="text-center w-full"
-      >
-        <h1 className="text-2xl md:text-5xl font-semibold">Our Core Values</h1>
-        <p className="font-light text-sm md:text-lg mt-2 md:mt-4">
-          The principles that guide everything we do at GUEHI AND CO
-        </p>
-      </motion.div>
-
-      {/* Cards */}
+    
+      <HeadingPart
+        title={"Our Core Values"}
+        desc={"The principles that guide everything we do at GUEHI AND CO"}
+      />
+ 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {coreValuesData.map((item, index) => (
           <CoreValueCard
