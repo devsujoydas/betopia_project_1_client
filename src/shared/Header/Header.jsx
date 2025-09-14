@@ -50,7 +50,7 @@ const Header = () => {
           {!user ? (
             <NavLink
               to="/auth/signin"
-              className="bg-[#4B1E2F] text-white rounded-sm px-4 py-2 text-sm hover:bg-white border border-transparent hover:border-black hover:text-[#4B1E2F] transition-all duration-300"
+              className="btn-primary "
             >
               Sign In
             </NavLink>
@@ -132,7 +132,7 @@ const Header = () => {
                       signOut();
                       setMobileMenuOpen(false);
                     }}
-                    className="w-full text-left px-4 py-2 text-sm hover:bg-zinc-100"
+                    className="btn-primary"
                   >
                     Sign Out
                   </button>

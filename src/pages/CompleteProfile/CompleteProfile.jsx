@@ -16,7 +16,7 @@ const steps = [
 ];
 
 const CompleteProfile = () => {
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
   const {
     register,
     handleSubmit,
@@ -41,7 +41,7 @@ const CompleteProfile = () => {
           address: data.address,
           city: data.city,
           state: data.state,
-          zip: data.zip,
+          zipCode: data.zipCode,
         };
         await api.put("/users/update-profile", payload);
         toast.success("Contact Info updated successfully!");

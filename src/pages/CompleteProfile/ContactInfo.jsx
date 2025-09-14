@@ -34,11 +34,11 @@ const ContactInfo = ({ register, errors }) => (
       <div className="grid gap-1">
         <label>Zip</label>
         <input
-          {...register("zip", { required: true })}
-          placeholder="Zip"
+          {...register("zipCode", { required: true })}
+          placeholder="Zip Code"
           className="w-full border-2 border-zinc-300 rounded-md p-3.5 mt-2"
         />
-        {errors.zip && <p className="text-red-500 text-sm">Required</p>}
+        {errors.zipCode && <p className="text-red-500 text-sm">Required</p>}
       </div>
     </div>
   </div>

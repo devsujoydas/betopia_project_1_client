@@ -136,7 +136,7 @@ const SecuritySettings = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="bg-[#4B1E2F] text-white px-8 py-3 rounded-md hover:bg-white hover:text-[#4B1E2F] border hover:border-black transition-all"
+            className="btn-primary"
           >
             {isSubmitting ? "Saving..." : "Save Changes"}
           </button>

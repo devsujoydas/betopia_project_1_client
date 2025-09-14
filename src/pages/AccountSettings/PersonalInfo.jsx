@@ -104,7 +104,7 @@ const PersonalInfo = ({ user }) => {
           <div className="flex justify-center mt-4">
             <button
               onClick={handleUpdateProfile}
-              className="bg-[#4B1E2F] text-white px-8 py-3 rounded-md hover:bg-white hover:text-[#4B1E2F] border hover:border-black transition-all"
+              className="btn-primary"
             >
               Update Now
             </button>

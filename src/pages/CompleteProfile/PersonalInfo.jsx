@@ -1,4 +1,4 @@
-import React from "react";
+
 
 const PersonalInfo = ({ register, errors }) => (
   <div className="text-sm">

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 const LoanStatus = () => {
   const { user } = useAuth();
   const loanStatus = user?.loanInfo?.loanStatus; 
+  // const loanStatus = "approved"; 
 
   const approvedDetails = user?.loanInfo?.approvedDetails;
   const rejectionDetails = user?.loanInfo?.rejectionDetails;
@@ -30,7 +31,7 @@ const LoanStatus = () => {
           <p className="text-gray-600 text-base sm:text-lg">
             Apply for a new loan to get started.
           </p>
-          <button className="bg-[#4B1E2F] text-white px-6 py-3 rounded-md hover:bg-white hover:text-[#4B1E2F] border hover:border-black active:scale-95 transition-all cursor-pointer">
+          <button className="btn-primary">
             Apply for Loan
           </button>
         </div>
@@ -59,7 +60,7 @@ const LoanStatus = () => {
               Your loan has been approved
             </h3>
             <img
-              className="w-full max-w-md sm:max-w-sm md:max-w-md rounded-lg "
+              className="w-full max-w-sm sm:max-w-sm md:max-w-sm rounded-lg "
               src="https://img.freepik.com/premium-vector/loan-agreement-concept-illustration_86047-473.jpg?w=1480"
               alt="Loan Approved"
             />
@@ -88,7 +89,7 @@ const LoanStatus = () => {
               </p>
             </div>
             {approvedDetails.note && (
-              <p className="text-gray-600 text-base sm:text-lg mt-2">
+              <p className="text-gray-600 font-semibold text-lg sm:text-xl  mt-2">
                 ** Note: {approvedDetails.note}
               </p>
             )}
@@ -98,20 +99,21 @@ const LoanStatus = () => {
 
       {/* Rejected */}
       {loanStatus === "rejected" && rejectionDetails && (
-        <div className="flex flex-col items-center text-center gap-6">
+        <div className="flex flex-col items-center text-center gap-4">
           <h3 className="font-medium text-2xl sm:text-3xl text-red-500">
             Your loan application has been rejected
           </h3>
-          {rejectionDetails.note && (
-            <p className="text-base sm:text-lg text-gray-700">
-              {rejectionDetails.note}
-            </p>
-          )}
+          
           <img
-            className="w-full max-w-md sm:max-w-sm md:max-w-md rounded-lg "
+            className="w-full max-w-sm sm:max-w-sm md:max-w-sm rounded-lg "
             src="https://img.freepik.com/premium-vector/loan-rejected-illustration_108061-2200.jpg?w=1480"
             alt="Loan Rejected"
           />
+          {rejectionDetails.note && (
+            <p className="text-base sm:text-lg text-gray-700">
+              <span className="font-semibold text-black">**Note: </span>{rejectionDetails.note}
+            </p>
+          )}
         </div>
       )}
     </motion.div>
