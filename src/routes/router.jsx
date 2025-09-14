@@ -6,11 +6,11 @@ import Signup from "../pages/Authentication/Signup/Signup";
 import ResetPassword from "../pages/Authentication/ResetPassword/ResetPassword";
 import Auth from "../pages/Authentication/Auth";
 import About from "../pages/About/About";
-import AccountSettings from "../pages/AccountSettings/AccountSettings";
 import Signin from "../pages/Authentication/Signin/Signin";
 import CompleteProfile from "../pages/CompleteProfile/CompleteProfile";
-import Account from "../pages/Account/Account";
 import ProtectedRoute from "./ProtectedRoute";
+import Account from "../pages/AccountSettings/Account";
+import AuthProtectedRoute from "./AuthProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -19,17 +19,6 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Home /> },
-
-      {
-        path: "auth",
-        element: <Auth />,
-        children: [
-          { path: "signin", element: <Signin /> },
-          { path: "signup", element: <Signup /> },
-          { path: "reset-password", element: <ResetPassword /> },
-        ],
-      },
-
       {
         path: "account",
         element: (
@@ -46,8 +35,38 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      { path: "account-settings", element: <AccountSettings /> },
       { path: "about", element: <About /> },
+
+      {
+        path: "auth",
+        element: <Auth />,
+        children: [
+          {
+            path: "signin",
+            element: (
+              <AuthProtectedRoute>
+                <Signin />
+              </AuthProtectedRoute>
+            ),
+          },
+          {
+            path: "signup",
+            element: (
+              <AuthProtectedRoute>
+                <Signup />
+              </AuthProtectedRoute>
+            ),
+          },
+          {
+            path: "reset-password",
+            element: (
+              <AuthProtectedRoute>
+                <ResetPassword />
+              </AuthProtectedRoute>
+            ),
+          },
+        ],
+      },
     ],
   },
 ]);

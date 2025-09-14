@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react"; 
-import api from "../../utils/api";
-import { useAuth } from "../../AuthProvider/AuthProvider";
+import { useAuth } from "../../AuthProvider/AuthProvider"; 
+import useSignOut from "../../hooks/useSignOut";
 
 const Header = () => {
   const { user } = useAuth();
@@ -15,20 +15,11 @@ const Header = () => {
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
   ];
-
-  const handleLogout = async () => {
-    try {
-      await api.post("/auth/signout");
-      navigate("/auth/signin", { replace: true });
-    } catch (err) {
-      console.error("Logout error:", err);
-    }
-  };
+  const signOut = useSignOut(); 
 
   return (
     <header className="border-b border-zinc-200 relative z-50">
-      <div className="max-w-screen-2xl mx-auto py-4 px-4 md:px-8 flex items-center justify-between">
-         
+      <div className="max-w-screen-2xl mx-auto py-6 px-4 md:px-8 flex items-center justify-between">
         <div className="flex-shrink-0">
           <Link to="/">
             <img
@@ -38,7 +29,7 @@ const Header = () => {
             />
           </Link>
         </div>
- 
+
         <nav className="hidden md:flex flex-1 justify-center space-x-8 items-center">
           {navLinks.map((link) => (
             <NavLink
@@ -54,7 +45,7 @@ const Header = () => {
             </NavLink>
           ))}
         </nav>
- 
+
         <div className="hidden md:flex items-center space-x-4">
           {!user ? (
             <NavLink
@@ -68,7 +59,7 @@ const Header = () => {
               <img
                 src="/default.jpg"
                 alt="User"
-                className="h-8 w-8 rounded-full cursor-pointer"
+                className="h-10 w-10 rounded-full cursor-pointer"
                 onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
               />
               {profileDropdownOpen && (
@@ -87,7 +78,7 @@ const Header = () => {
                       Account
                     </Link>
                     <button
-                      onClick={handleLogout}
+                      onClick={signOut}
                       className="px-4 py-2 text-sm text-left hover:bg-zinc-100"
                     >
                       Sign Out
@@ -98,14 +89,14 @@ const Header = () => {
             </div>
           )}
         </div>
- 
+
         <div className="md:hidden flex items-center">
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
- 
+
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.nav
@@ -138,7 +129,7 @@ const Header = () => {
                 <li className="border-t mt-2 pt-2">
                   <button
                     onClick={() => {
-                      handleLogout();
+                      signOut();
                       setMobileMenuOpen(false);
                     }}
                     className="w-full text-left px-4 py-2 text-sm hover:bg-zinc-100"

@@ -7,6 +7,7 @@ const AuthContext = createContext();
 const fetchProfile = async () => {
   try {
     const { data } = await api.get("/users/profile");
+    // console.log(data)
     return data;
   } catch (err) {
     if (err.response?.status === 401) return null; 
@@ -15,15 +16,28 @@ const fetchProfile = async () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const { data: user, isLoading, isError } = useQuery({
+  const {
+    data: user,
+    isLoading,
+    isError,
+    isFetching, 
+  } = useQuery({
     queryKey: ["profile"],
     queryFn: fetchProfile,
-    staleTime: 5 * 60 * 1000,
-    retry: 1,
-    refetchOnWindowFocus: false,
+    // staleTime: 5 * 1000,
+    // retry: 1,
+    // refetchOnWindowFocus: false,
   });
 
-  const value = { user, isLoading, isError };
+  const value = { user, isLoading, isError, isFetching };
+
+  if (isFetching) {
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <div className="h-10 w-10 border-y-2 rounded-full animate-spin "></div>
+      </div>
+    )
+  }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
