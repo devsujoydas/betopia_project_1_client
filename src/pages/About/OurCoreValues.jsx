@@ -80,7 +80,7 @@ const OurCoreValues = () => {
   ];
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-4 py-20 space-y-20">
+    <div className="max-w-screen-2xl mx-auto px-4 py-5 md:py-20 space-y-6 md:space-y-20">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -30 }}
@@ -89,8 +89,8 @@ const OurCoreValues = () => {
         transition={{ duration: 0.6 }}
         className="text-center w-full"
       >
-        <h1 className="text-4xl md:text-5xl font-semibold">Our Core Values</h1>
-        <p className="font-light text-base md:text-lg mt-4">
+        <h1 className="text-2xl md:text-5xl font-semibold">Our Core Values</h1>
+        <p className="font-light text-sm md:text-lg mt-2 md:mt-4">
           The principles that guide everything we do at GUEHI AND CO
         </p>
       </motion.div>

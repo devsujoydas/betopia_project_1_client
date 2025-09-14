@@ -50,7 +50,7 @@ const Header = () => {
           {!user ? (
             <NavLink
               to="/auth/signin"
-              className="btn-primary "
+              className="btn-signin" 
             >
               Sign In
             </NavLink>

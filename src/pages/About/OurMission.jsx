@@ -19,7 +19,7 @@ const fadeIn = (direction = "up", delay = 0) => {
 
 export const OurMission = () => {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-20 flex flex-col md:flex-row items-center gap-10">
+    <div className="max-w-7xl mx-auto px-4 py-5 md:py-20 flex flex-col md:flex-row items-center gap-10">
       {/* Image */}
       <motion.div
         className="w-full md:w-1/2"
