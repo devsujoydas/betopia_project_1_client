@@ -19,12 +19,11 @@ const CreditTierCard = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay: index * 0.15 }}
-      className="rounded-md shadow-md p-6 w-full"
+      className="rounded-md shadow-md px-8 py-10 w-full"
       style={{
         background: `linear-gradient(135deg, ${colors.from}, ${colors.to})`,
       }}
     >
-      {/* Header */}
       <div className="flex justify-between items-center mb-4">
         <h1 className="font-medium text-lg">{title}</h1>
         <span
@@ -35,14 +34,11 @@ const CreditTierCard = ({
         </span>
       </div>
 
-      {/* Amount & Description */}
       <p className="text-lg font-medium">{amount}</p>
       <p className="text-[16px] font-light text-zinc-700 mt-4">{description}</p>
 
-      {/* Divider */}
       <hr className="my-4 border-gray-300" />
 
-      {/* Bullet Points */}
       <div className="space-y-3 text-sm text-gray-800">
         {bulletPoints.map((point, i) => (
           <div key={i} className="flex items-start gap-2">
@@ -58,7 +54,7 @@ const CreditTierCard = ({
   );
 };
 
-// Main Component
+
 const CreditLimitTiers = () => {
   const creditLimitTiersData = [
     {
@@ -71,8 +67,8 @@ const CreditLimitTiers = () => {
       colors: {
         from: "#FEE2E2",
         to: "#FEF2F2",
-        highlight: "#FECACA", // light badge
-        accent: "#DC2626", // dark red for icons
+        highlight: "#FECACA",
+        accent: "#DC2626",
       },
     },
     {
@@ -87,8 +83,8 @@ const CreditLimitTiers = () => {
       colors: {
         from: "#FFEDD5",
         to: "#FFF7ED",
-        highlight: "#FED7AA", // light badge
-        accent: "#EA580C", // dark orange for icons
+        highlight: "#FED7AA",
+        accent: "#EA580C",
       },
     },
     {
@@ -100,8 +96,8 @@ const CreditLimitTiers = () => {
       colors: {
         from: "#FEF9C3",
         to: "#FEFCE8",
-        highlight: "#FEF08A", // light badge
-        accent: "#CA8A04", // dark yellow for icons
+        highlight: "#FEF08A",
+        accent: "#CA8A04",
       },
     },
     {
@@ -113,8 +109,8 @@ const CreditLimitTiers = () => {
       colors: {
         from: "#DCFCE7",
         to: "#F0FDF4",
-        highlight: "#BBF7D0", // light badge
-        accent: "#16A34A", // dark green for icons
+        highlight: "#BBF7D0",
+        accent: "#16A34A",
       },
     },
   ];

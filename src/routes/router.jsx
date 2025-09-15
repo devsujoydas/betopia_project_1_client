@@ -11,6 +11,8 @@ import CompleteProfile from "../pages/CompleteProfile/CompleteProfile";
 import ProtectedRoute from "./ProtectedRoute";
 import Account from "../pages/AccountSettings/Account";
 import AuthProtectedRoute from "./AuthProtectedRoute";
+import ClientDashBoard from "../pages/ClientDashBoard/ClientDashBoard";
+import AdminDashBoard from "../pages/AdminDashBoard/AdminDashBoard";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,22 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Account />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "client-dashboard",
+        element: (
+          <ProtectedRoute>
+            <ClientDashBoard />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "admin-dashboard",
+        element: (
+          <ProtectedRoute>
+            <AdminDashBoard />
           </ProtectedRoute>
         ),
       },

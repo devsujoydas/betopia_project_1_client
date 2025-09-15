@@ -14,6 +14,8 @@ const Header = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
+    { name: "Admin DashBoard", path: "/admin-dashboard" },
+    { name: "Client DashBoard", path: "/client-dashboard" },
   ];
   const signOut = useSignOut(); 
 

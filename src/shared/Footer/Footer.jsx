@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Logo & Description */}
           <div className="col-span-3">
-            <div className="bg-white w-fit px-4 pt-3 pb-2 rounded-md mb-4">
+            <div className="bg-white w-fit px-4 py-3 rounded-md mb-4">
               <img src="/logo.png" alt="Guehi and Co Logo" />
             </div>
             <p className="text-sm text-zinc-300">

@@ -60,15 +60,15 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="bg-white max-w-screen-2xl mx-auto border border-zinc-200 p-6 sm:p-8 rounded-xl grid grid-cols-2 sm:grid-cols-4 gap-6 shadow-lg"
           >
-            <div className="text-center">
+            <div className="text-center border-r border-zinc-300">
               <h1 className="font-semibold text-xl sm:text-2xl">10K+</h1>
               <h1 className="text-xs sm:text-sm mt-1">Active Users</h1>
             </div>
-            <div className="text-center">
+            <div className="text-center border-r border-zinc-300">
               <h1 className="font-semibold text-xl sm:text-2xl">$2500+</h1>
               <h1 className="text-xs sm:text-sm mt-1">Loans Facilitated</h1>
             </div>
-            <div className="text-center">
+            <div className="text-center border-r border-zinc-300">
               <h1 className="font-semibold text-xl sm:text-2xl">98%+</h1>
               <h1 className="text-xs sm:text-sm mt-1">Client Satisfaction</h1>
             </div>
