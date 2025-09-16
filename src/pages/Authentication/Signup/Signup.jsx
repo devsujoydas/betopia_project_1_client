@@ -5,9 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
 import api from "../../../utils/api";
+import { useAuth } from "../../../AuthProvider/AuthProvider";
 
 const Signup = () => {
-  
+  const { setUser } = useAuth();
   const {
     register,
     handleSubmit,
@@ -31,8 +32,9 @@ const Signup = () => {
         })
         .then((res) => {
           console.log(res.data);
+          setUser(res.data);
           toast.success("Account created successfully!");
-          navigate("/complete-profile")
+          navigate("/complete-profile");
         });
     } catch (err) {
       toast.error(err?.response?.data?.message || "Server error");
@@ -179,11 +181,7 @@ const Signup = () => {
           <p className="text-red-600 text-sm mb-4">{errors.terms.message}</p>
         )}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="btn-primary w-full"
-        >
+        <button type="submit" disabled={loading} className="btn-primary w-full">
           {loading ? "Creating Account..." : "Sign Up"}
         </button>
 

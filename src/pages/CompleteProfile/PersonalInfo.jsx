@@ -11,7 +11,7 @@ const PersonalInfo = ({ register, errors }) => (
           className="w-full border-2 border-zinc-300 rounded-md p-3.5 mt-2 outline-none"
           placeholder="Enter your first name"
         />
-        {errors.firstName && <p className="text-red-500 text-sm">Required</p>}
+        {errors?.firstName && <p className="text-red-500 text-sm">Required</p>}
       </div>
       <div>
         <label className="text-sm">Last Name</label>
@@ -20,7 +20,7 @@ const PersonalInfo = ({ register, errors }) => (
           className="w-full border-2 border-zinc-300 rounded-md p-3.5 mt-2 outline-none"
           placeholder="Enter your last name"
         />
-        {errors.lastName && <p className="text-red-500 text-sm">Required</p>}
+        {errors?.lastName && <p className="text-red-500 text-sm">Required</p>}
       </div>
       <div>
         <label className="text-sm">Date of Birth</label>
@@ -29,7 +29,7 @@ const PersonalInfo = ({ register, errors }) => (
           type="date"
           className="w-full border-2 border-zinc-300 rounded-md p-3.5 mt-2 outline-none"
         />
-        {errors.dob && <p className="text-red-500 text-sm">Required</p>}
+        {errors?.dob && <p className="text-red-500 text-sm">Required</p>}
       </div>
       <div>
         <label className="text-sm">Gender</label>
@@ -42,7 +42,7 @@ const PersonalInfo = ({ register, errors }) => (
           <option>female</option>
           <option>other</option>
         </select>
-        {errors.gender && <p className="text-red-500 text-sm">Required</p>}
+        {errors?.gender && <p className="text-red-500 text-sm">Required</p>}
       </div>
     </div>
   </div>

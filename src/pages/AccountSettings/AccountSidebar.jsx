@@ -20,7 +20,7 @@ const AccountSidebar = ({ user, activeTab, setActiveTab }) => {
         />
         <div>
           <h2 className="font-semibold text-xl mb-1">
-            {user?.personalInfo.firstName} {user?.personalInfo.lastName}
+            {user?.personalInfo?.firstName} {user?.personalInfo?.lastName}
           </h2>
           <p className="text-sm text-zinc-500">{user?.email}</p>
         </div>

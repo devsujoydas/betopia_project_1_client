@@ -6,14 +6,14 @@ import api from "../../utils/api";
 const PersonalInfo = ({ user }) => {
   const [editing, setEditing] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: user?.personalInfo.firstName || "",
-    lastName: user?.personalInfo.lastName || "",
+    firstName: user?.personalInfo?.firstName || "",
+    lastName: user?.personalInfo?.lastName || "",
     email: user?.email || "",
     phone: user?.phone || "",
-    address: user?.contactInfo.address || "",
-    city: user?.contactInfo.city || "",
-    state: user?.contactInfo.state || "",
-    zipCode: user?.contactInfo.zipCode || "",
+    address: user?.contactInfo?.address || "",
+    city: user?.contactInfo?.city || "",
+    state: user?.contactInfo?.state || "",
+    zipCode: user?.contactInfo?.zipCode || "",
   });
 
   const handleUpdateProfile = async () => {
@@ -59,7 +59,7 @@ const PersonalInfo = ({ user }) => {
         className="p-6"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {/* Inputs */}
+         
           {[
             { label: "First Name", key: "firstName" },
             { label: "Last Name", key: "lastName" },
@@ -72,7 +72,7 @@ const PersonalInfo = ({ user }) => {
                 type="text"
                 value={formData[f.key]}
                 onChange={(e) =>
-                  setFormData({ ...formData, [f.key]: e.target.value })
+                  setFormData({ ...formData, [f?.key]: e.target.value })
                 }
                 disabled={!editing}
                 className="w-full border-2 border-zinc-300 rounded-md p-3.5 mt-2"

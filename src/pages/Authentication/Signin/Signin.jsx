@@ -5,9 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast"; 
 import { motion } from "framer-motion";
 import api from "../../../utils/api";
+import { useAuth } from "../../../AuthProvider/AuthProvider";
 
 const Signin = () => {
   const navigate = useNavigate()
+  const {setUser} = useAuth()
   const {
     register,
     handleSubmit,
@@ -25,6 +27,7 @@ const Signin = () => {
       })
       .then(res=>{
         console.log(res)
+        setUser(res.data)
         toast.success("Logged in successfully!");
         navigate("/account")
       })
