@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, Eye, EyeClosed } from "lucide-react";
 import { useForm } from "react-hook-form"; 
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast"; 
@@ -93,7 +93,7 @@ const Signin = () => {
               onClick={() => setShowPassword(!showPassword)}
               className="cursor-pointer"
             >
-              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              {showPassword ? <Eye size={18} /> : <EyeClosed size={18} />}
             </span>
           </div>
           {errors.password && (

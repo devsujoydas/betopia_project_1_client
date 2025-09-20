@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import { Lock, Eye, EyeOff } from "lucide-react";
+import { Lock, Eye, EyeClosed } from "lucide-react";
 import toast from "react-hot-toast";
 import api from "../../utils/api";
+
 
 const SecuritySettings = () => {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
@@ -64,7 +65,7 @@ const SecuritySettings = () => {
                 onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                 className="cursor-pointer"
               >
-                {showCurrentPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+                {showCurrentPassword ? <Eye size={18} /> : <EyeClosed size={18} />}
               </span>
             </div>
             {errors.currentPassword && (
@@ -95,7 +96,7 @@ const SecuritySettings = () => {
                 onClick={() => setShowNewPassword(!showNewPassword)}
                 className="cursor-pointer"
               >
-                {showNewPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+                {showNewPassword ? <Eye size={18} /> : <EyeClosed size={18} />}
               </span>
             </div>
             {errors.newPassword && (
@@ -123,7 +124,7 @@ const SecuritySettings = () => {
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 className="cursor-pointer"
               >
-                {showConfirmPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+                {showConfirmPassword ? <Eye size={18} /> : <EyeClosed size={18} />}
               </span>
             </div>
             {errors.confirmPassword && (

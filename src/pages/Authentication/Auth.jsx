@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 const Auth = () => {
   return (
-    <div className="h-[80dvh] flex justify-center items-center">
+    <div className="h-[100dvh] font-poppins flex justify-center items-center">
       <Outlet />
     </div>
   );
