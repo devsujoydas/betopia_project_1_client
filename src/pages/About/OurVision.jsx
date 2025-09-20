@@ -53,8 +53,8 @@ export const OurVision = () => {
         viewport={{ once: true }}
       >
         <img
-          className="rounded-lg shadow-lg object-cover w-full h-full"
-          src="https://img.freepik.com/free-photo/two-businesspeople-shaking-hands-indoors_1423-209.jpg?t=st=1757853321~exp=1757856921~hmac=3e12ce30925db5c1f7cfbe0f1ad520f608cd7d44741945089727b126652ed720&w=1480"
+          className="rounded-lg shadow-lg object-cover w-full h-full hover:scale-105 transition-all duration-1000"
+          src="https://img.freepik.com/free-photo/business-agreement-handshake-hand-gesture_53876-130006.jpg?t=st=1758363853~exp=1758367453~hmac=887c3e17c37b2ac27d8932c3df42045bf18e8b6ce3da6d4a61df968465e8488f&w=1480"
           alt="Our Vision"
         />
       </motion.div>

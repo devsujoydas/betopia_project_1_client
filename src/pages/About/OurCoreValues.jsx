@@ -1,11 +1,11 @@
 import React from "react";
 import {
   Shield,
-  Lightbulb,
+  TrendingUp,
   User,
-  Earth,
+  Globe,
   Award,
-  HeartHandshake,
+  ChartNoAxesColumnIncreasing,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import HeadingPart from "../Home/HeadingPart";
@@ -33,7 +33,7 @@ const CoreValueCard = ({ icon: Icon, title, description, index }) => {
     </motion.div>
   );
 };
-
+ 
 // Main Component
 const OurCoreValues = () => {
   const coreValuesData = [
@@ -44,7 +44,7 @@ const OurCoreValues = () => {
         "We believe in complete transparency in our scoring models and lending processes, building trust with both clients and lenders.",
     },
     {
-      icon: Lightbulb,
+      icon: TrendingUp,
       title: "Innovation",
       description:
         "We continuously innovate our platform and scoring models to provide the most accurate and fair assessment of creditworthiness.",
@@ -56,7 +56,7 @@ const OurCoreValues = () => {
         "We put our clients' needs first, ensuring they have control over their data and receive fair treatment from lenders.",
     },
     {
-      icon: Earth,
+      icon: Globe,
       title: "Inclusivity",
       description:
         "We're committed to creating financial opportunities for underserved communities and businesses across diverse industries.",
@@ -68,7 +68,7 @@ const OurCoreValues = () => {
         "We strive for excellence in all aspects of our platform, from user experience to the accuracy of our credit scoring algorithms.",
     },
     {
-      icon: HeartHandshake,
+      icon: ChartNoAxesColumnIncreasing,
       title: "Social Impact",
       description:
         "We measure our success not just by profits, but by the positive impact we make on individuals, businesses, and communities.",

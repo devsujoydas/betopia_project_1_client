@@ -29,7 +29,7 @@ export const OurMission = () => {
         viewport={{ once: true }}
       >
         <img
-          className="rounded-lg shadow-lg object-cover w-full h-full"
+          className="rounded-lg shadow-lg object-cover w-full h-full hover:scale-105 transition-all duration-1000"
           src="https://img.freepik.com/free-photo/modern-equipped-computer-lab_23-2149241259.jpg?t=st=1757849982~exp=1757853582~hmac=7d92c9af8e2d81ffeb74f956de83f05f5b018b270bbab57d940bf9b3b0ea70f7&w=1480"
           alt="Our Mission"
         />

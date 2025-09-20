@@ -29,7 +29,7 @@ const Hero = () => {
               decisions across multiple industries.
             </p>
             <div className="flex justify-center lg:justify-start">
-              <button className="flex items-center gap-2 bg-[#DBCBB9] text-black px-4 sm:px-5 py-2 rounded-md cursor-pointer border border-transparent hover:bg-transparent hover:text-[#DBCBB9] hover:border-[#DBCBB9] transition-all duration-300">
+              <button className="flex items-center gap-2 bg-[#DBCBB9] text-black px-4 sm:px-5 py-2 rounded-md cursor-pointer border border-transparent hover:bg-transparent hover:text-[#DBCBB9] hover:border-[#DBCBB9] transition-all duration-300 active:scale-95">
                 Get Started as Client <ArrowRight className="w-5 h-5" />
               </button>
             </div>

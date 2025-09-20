@@ -1,5 +1,10 @@
 import React from "react";
-import { User, Lightbulb, ClipboardCheck, Handshake } from "lucide-react";
+import {
+  Users,
+  FileText,
+  ChartNoAxesColumnIncreasing,
+  ShieldCheck,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import HeadingPart from "./HeadingPart";
 
@@ -19,7 +24,9 @@ const StepCard = ({ icon: Icon, title, description, index }) => {
       </div>
 
       {/* Title */}
-      <h1 className="text-lg sm:text-xl text-[#4B1E2F] font-semibold">{title}</h1>
+      <h1 className="text-lg sm:text-xl text-[#4B1E2F] font-semibold">
+        {title}
+      </h1>
 
       {/* Description */}
       <p className="font-light text-sm sm:text-base text-gray-700 leading-relaxed">
@@ -33,10 +40,10 @@ const StepCard = ({ icon: Icon, title, description, index }) => {
 const HowItWorks = () => {
   // Icon mapping based on step
   const iconMap = {
-    "Create Account": User,
-    "Fill Data Form": Lightbulb,
-    "Get Score & Limit": ClipboardCheck,
-    "Connect with Lenders": Handshake,
+    "Create Account": Users,
+    "Fill Data Form": FileText,
+    "Get Score & Limit": ChartNoAxesColumnIncreasing,
+    "Connect with Lenders": ShieldCheck,
   };
 
   const stepsData = [
@@ -63,16 +70,23 @@ const HowItWorks = () => {
   ];
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-4 py-5 md:py-20 space-y-6 md:space-y-20">
-      {/* Header */}
-      <HeadingPart title={"How It Works"} desc={"Get your credit score and suggested credit limit in just four simple steps"}/>
+    <div className="bg-[#F9FAFB]">
+      <div className="max-w-screen-2xl mx-auto px-4 py-5 md:py-20 space-y-6 md:space-y-20">
+        {/* Header */}
+        <HeadingPart
+          title={"How It Works"}
+          desc={
+            "Get your credit score and suggested credit limit in just four simple steps"
+          }
+        />
 
-      {/* Steps Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stepsData.map((step, index) => {
-          const Icon = iconMap[step.title] || User; // fallback
-          return <StepCard key={index} index={index} icon={Icon} {...step} />;
-        })}
+        {/* Steps Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {stepsData.map((step, index) => {
+            const Icon = iconMap[step.title] || User; // fallback
+            return <StepCard key={index} index={index} icon={Icon} {...step} />;
+          })}
+        </div>
       </div>
     </div>
   );
