@@ -143,24 +143,23 @@ const ProgressBar = ({ value }) => {
     <div className="flex flex-col items-center  w-full relative">
       <div className=" ">
         <svg
-          className="rounded-full  border rotate-[54deg]"
-          width="40"
-          height="40"
+          className="rounded-full h-[200px]  md:h-[400px] sm:h-[250px] w-[200px] md:w-[400px] sm:w-[250px] rotate-[54deg]"
+          
           viewBox="-5 0 290 280"
         >
           {generateArcs()}
         </svg>
 
-        <div className="border ">
-          <div className=" text-center">
-            <span className="w-fit font-semibold bg-green-100 text-green-600  px-4 py-0.5 rounded-full">
+        <div className="md:-mt-68 sm:-mt-45 -mt-36">
+          <div className=" text-center ">
+            <span className="w-fit font-semibold bg-green-100 text-green-600 md:text-[16px] text-xs sm:text-sm px-4 py-0.5 rounded-full">
               {getLabel(value)}
             </span>
-            <div className="text-6xl font-bold text-primary mt-2">{value}</div>
+            <div className="md:text-6xl text-4xl sm:text-5xl font-bold text-primary mt-2 md:mt-4">{value}</div>
 
-            <div className="w-full mt-20 flex justify-between text-gray-600 text-lg font-medium ">
+            <div className="w-full mt-8 sm:mt-12 md:mt-20 flex justify-between text-gray-600 text-sm md:text-xl font-semibold ">
               <span>0</span>
-              <span>100</span>
+              <span className="md:-mr-2 -mr-3 sm:-mr-5">100</span>
             </div>
           </div>
         </div>
