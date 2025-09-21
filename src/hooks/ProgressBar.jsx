@@ -2,11 +2,11 @@
 import { motion } from "framer-motion";
 
 const SEGMENTS = 5;
-const FULL_ANGLE = 210;  // 3/4 circle
+const FULL_ANGLE = 220; // 3/4 circle
 const ARC_START_ANGLE = 90; // Start at 90 deg for perfect horizontal baseline
-const gapDeg = 8; // gap between segments
+const gapDeg = 7; // gap between segments
 const radius = 130; // bigger radius for bigger arc
-const strokeWidth = 20;
+const strokeWidth = 25;
 const center = 140; // center moved a bit down to fit arc properly
 
 // Calculate total gap degrees
@@ -62,7 +62,9 @@ const ProgressBar = ({ value }) => {
     let lastFilledIndex = -1;
 
     for (let i = 0; i < SEGMENTS; i++) {
-      const segmentStartPercent = segmentPercents.slice(0, i).reduce((a, b) => a + b, 0);
+      const segmentStartPercent = segmentPercents
+        .slice(0, i)
+        .reduce((a, b) => a + b, 0);
       const segmentEndPercent = segmentStartPercent + segmentPercents[i];
 
       if (
@@ -95,16 +97,14 @@ const ProgressBar = ({ value }) => {
           fill="none"
           strokeWidth={strokeWidth}
           strokeLinecap={
-            isFirstSegment
-              ? "round"
-              : isLastSegment
-                ? "round"
-                : "butt"
+            isFirstSegment ? "round" : isLastSegment ? "round" : "butt"
           }
         />
       );
 
-      const segmentStartPercent = segmentPercents.slice(0, i).reduce((a, b) => a + b, 0);
+      const segmentStartPercent = segmentPercents
+        .slice(0, i)
+        .reduce((a, b) => a + b, 0);
       const segmentEndPercent = segmentStartPercent + segmentPercents[i];
 
       let fillRatio = 0;
@@ -116,8 +116,7 @@ const ProgressBar = ({ value }) => {
         const isFirstFilled = i === firstFilledIndex;
         const isLastFilled = i === lastFilledIndex;
 
-        const strokeLinecap =
-          isFirstFilled || isLastFilled ? "round" : "butt";
+        const strokeLinecap = isFirstFilled || isLastFilled ? "round" : "butt";
 
         progressArcs.push(
           <motion.path
@@ -143,20 +142,23 @@ const ProgressBar = ({ value }) => {
   return (
     <div className="flex flex-col items-center  w-full relative">
       <div className=" ">
-        <div className="-mr-10 "> 
-            <svg className="border rotate-[58deg]" width="360" height="480" viewBox="0 0 280 200">
-              {generateArcs()}
-            </svg> 
-        </div>
+        <svg
+          className="rounded-full  border rotate-[54deg]"
+          width="40"
+          height="40"
+          viewBox="-5 0 290 280"
+        >
+          {generateArcs()}
+        </svg>
 
-        <div className=" -mt-55 -ml-8 ">
+        <div className="border ">
           <div className=" text-center">
-            <span className="w-fit bg-green-100 text-green-600 text-xs px-2 py-0.5 rounded-full">
+            <span className="w-fit font-semibold bg-green-100 text-green-600  px-4 py-0.5 rounded-full">
               {getLabel(value)}
             </span>
-            <div className="text-4xl font-bold text-primary mt-2">{value}</div>
+            <div className="text-6xl font-bold text-primary mt-2">{value}</div>
 
-            <div className="w-full mt-15 flex justify-between text-gray-600 text-lg font-medium px-2">
+            <div className="w-full mt-20 flex justify-between text-gray-600 text-lg font-medium ">
               <span>0</span>
               <span>100</span>
             </div>
