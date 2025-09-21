@@ -3,7 +3,7 @@ import { useAuth } from "../AuthProvider/AuthProvider";
 
 export default function ProtectedRoute({ children }) {
   const { user, isLoading } = useAuth();
-
+  
   if (isLoading)
     return (
       <div className="flex justify-center items-center min-h-screen">

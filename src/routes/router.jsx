@@ -12,6 +12,7 @@ import Account from "../pages/AccountSettings/Account";
 import ClientDashBoard from "../pages/ClientDashBoard/ClientDashBoard";
 import AdminDashBoard from "../pages/AdminDashBoard/AdminDashBoard";
 import MainLayout from "../layout/MainLayout";
+import AuthProtectedRoute from "./AuthProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -20,31 +21,19 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: "/", element: <Home /> },
+      { path: "about", element: <About /> },
       {
         path: "account",
-        element: (
-          <ProtectedRoute>
-            <Account />
-          </ProtectedRoute>
-        ),
+        element: <ProtectedRoute><Account /></ProtectedRoute>,
       },
       {
         path: "client-dashboard",
-        element: (
-          <ProtectedRoute>
-            <ClientDashBoard />
-          </ProtectedRoute>
-        ),
+        element: <ProtectedRoute><ClientDashBoard /></ProtectedRoute>,
       },
       {
         path: "admin-dashboard",
-        element: (
-          <ProtectedRoute>
-            <AdminDashBoard />
-          </ProtectedRoute>
-        ),
+        element: <ProtectedRoute><AdminDashBoard /></ProtectedRoute>,
       },
-      { path: "about", element: <About /> },
     ],
   },
   {
@@ -53,23 +42,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "signin",
-        element: <Signin />,
+        element: <AuthProtectedRoute> <Signin /></AuthProtectedRoute>,
       },
       {
         path: "signup",
-        element: <Signup />,
+        element: <AuthProtectedRoute><Signup /></AuthProtectedRoute>,
       },
       {
         path: "reset-password",
-        element: <ResetPassword />,
+        element: <AuthProtectedRoute><ResetPassword /></AuthProtectedRoute>,
       },
       {
         path: "complete-profile",
-        element: (
-          <ProtectedRoute>
-            <CompleteProfile />
-          </ProtectedRoute>
-        ),
+        element: <ProtectedRoute><CompleteProfile /></ProtectedRoute>,
       },
     ],
   },

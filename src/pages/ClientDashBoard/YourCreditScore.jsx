@@ -1,6 +1,7 @@
 import React from "react";
+import ProgressBar from "../../hooks/ProgressBar";
 
-const ProgressBar = ({ value, max, color }) => {
+const ProgressBar2 = ({ value, max, color }) => {
   const percentage = (value / max) * 100;
 
   return (
@@ -31,18 +32,8 @@ const YourCreditScore = () => {
       {/* Body */}
       <div className="p-10">
         {/* Score Section */}
-        <div className="text-center">
-          <span className="text-green-800 bg-emerald-300 px-4 py-1 rounded-full font-medium mb-5 inline-block">
-            Excellent
-          </span>
-          <h1 className="font-medium text-5xl">95</h1>
-          <p className="mt-10 text-gray-700">
-            Your credit score is in the excellent range. This indicates
-            excellent creditworthiness.
-          </p>
-        </div>
-
-        <hr className="my-14" />
+        <ProgressBar value={85}/>
+        <hr className="my-14 text-zinc-200" />
 
         {/* Factors */}
         <div className="text-primary">
@@ -61,7 +52,7 @@ const YourCreditScore = () => {
                     {factor.value}/{factor.max}
                   </p>
                 </div>
-                <ProgressBar
+                <ProgressBar2
                   value={factor.value}
                   max={factor.max}
                   color={factor.color}

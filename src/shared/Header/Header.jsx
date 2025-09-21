@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react"; 
-import { useAuth } from "../../AuthProvider/AuthProvider"; 
+import { Menu, X } from "lucide-react";
+import { useAuth } from "../../AuthProvider/AuthProvider";
 import useSignOut from "../../hooks/useSignOut";
 
 const Header = () => {
@@ -17,7 +17,7 @@ const Header = () => {
     { name: "Admin DashBoard", path: "/admin-dashboard" },
     { name: "Client DashBoard", path: "/client-dashboard" },
   ];
-  const signOut = useSignOut(); 
+  const signOut = useSignOut();
 
   return (
     <header className="border-b border-zinc-200 relative z-50">
@@ -33,26 +33,21 @@ const Header = () => {
         </div>
 
         <nav className="hidden md:flex flex-1 justify-center space-x-8 items-center">
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.name}
-              to={link.path}
-              className={({ isActive }) =>
-                `text-zinc-700 hover:text-[#4B1E2F] transition-colors ${
-                  isActive ? "font-semibold" : ""
-                }`
-              }
-            >
-              {link.name}
-            </NavLink>
-          ))}
+
+          <NavLink to={"/"} className={({ isActive }) => `text-zinc-700 hover:text-[#4B1E2F] transition-colors ${isActive ? "font-semibold" : ""}`}>Home</NavLink>
+
+          <NavLink to={"/about"} className={({ isActive }) => `text-zinc-700 hover:text-[#4B1E2F] transition-colors ${isActive ? "font-semibold" : ""}`}>About</NavLink>
+
+          <NavLink to={"/admin-dashboard"} className={({ isActive }) => `text-zinc-700 hover:text-[#4B1E2F] transition-colors ${isActive ? "font-semibold" : ""}`}>Admin DashBoard</NavLink>
+
+          <NavLink to={"/client-dashboard"} className={({ isActive }) => `text-zinc-700 hover:text-[#4B1E2F] transition-colors ${isActive ? "font-semibold" : ""}`}>Client DashBoard</NavLink>
         </nav>
 
         <div className="hidden md:flex items-center space-x-4">
           {!user ? (
             <NavLink
               to="/auth/signin"
-              className="btn-signin" 
+              className="btn-signin"
             >
               Sign In
             </NavLink>
@@ -108,17 +103,19 @@ const Header = () => {
             className="md:hidden overflow-hidden border-t border-zinc-200 bg-white"
           >
             <ul className="flex flex-col p-4 space-y-3">
-              {navLinks.map((link) => (
-                <li key={link.name}>
-                  <NavLink
-                    onClick={() => setMobileMenuOpen(false)}
-                    to={link.path}
-                    className="block w-full"
-                  >
-                    {link.name}
-                  </NavLink>
-                </li>
-              ))}
+            
+              <NavLink
+                onClick={() => setMobileMenuOpen(false)} to={"/"} className="block w-full">Home</NavLink>
+
+              <NavLink
+                onClick={() => setMobileMenuOpen(false)} to={"/about"} className="block w-full">About</NavLink>
+
+              <NavLink
+                onClick={() => setMobileMenuOpen(false)} to={"/admin-dashboard"} className="block w-full">Admin DashBoard</NavLink>
+
+              <NavLink
+                onClick={() => setMobileMenuOpen(false)} to={"/client-dashboard"} className="block w-full">Client DashBoard</NavLink>
+
               {!user ? (
                 <NavLink
                   onClick={() => setMobileMenuOpen(false)}
