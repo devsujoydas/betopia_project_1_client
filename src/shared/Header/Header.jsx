@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { CircleUser, LayoutDashboard, LogOut, Menu, X } from "lucide-react";
 import { useAuth } from "../../AuthProvider/AuthProvider";
 import useSignOut from "../../hooks/useSignOut";
 
@@ -11,12 +11,7 @@ const Header = () => {
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Admin DashBoard", path: "/admin-dashboard" },
-    { name: "Client DashBoard", path: "/client-dashboard" },
-  ];
+
   const signOut = useSignOut();
 
   return (
@@ -54,9 +49,9 @@ const Header = () => {
           ) : (
             <div className="relative">
               <img
-                src="/default.jpg"
+                src={user?.personalInfo?.profilePhotoUrl? user?.personalInfo?.profilePhotoUrl : "/default.jpg"}
                 alt="User"
-                className="h-10 w-10 rounded-full cursor-pointer"
+                className="h-10 w-10 rounded-full cursor-pointer object-cover shadow-md"
                 onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
               />
               {profileDropdownOpen && (
@@ -65,20 +60,27 @@ const Header = () => {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="absolute mt-2 w-40 bg-white border border-zinc-200 rounded shadow-lg flex flex-col right-0"
+                    className="absolute mt-2 w-40 bg-white border border-zinc-200 rounded-xl p-3 shadow-lg flex flex-col right-0 "
                   >
                     <Link
                       to="/account"
-                      className="px-4 py-2 text-sm hover:bg-zinc-100"
+                      className="px-4 py-2 text-sm hover:bg-zinc-100 flex items-center gap-2 rounded-md"
                       onClick={() => setProfileDropdownOpen(false)}
                     >
-                      Account
+                      <CircleUser className="w-5" />Account
+                    </Link>
+                    <Link
+                      to="/client-dashboard"
+                      className="px-4 py-2 text-sm hover:bg-zinc-100 flex items-center gap-2 rounded-md"
+                      onClick={() => setProfileDropdownOpen(false)}
+                    >
+                      <LayoutDashboard className="w-5" />Dashboard
                     </Link>
                     <button
                       onClick={signOut}
-                      className="px-4 py-2 text-sm text-left hover:bg-zinc-100"
+                      className="px-4 py-2 text-sm text-left hover:bg-red-100 text-red-500 cursor-pointer flex items-center gap-2 rounded-md"
                     >
-                      Sign Out
+                      <LogOut className="w-5" />Sign Out
                     </button>
                   </motion.div>
                 </AnimatePresence>

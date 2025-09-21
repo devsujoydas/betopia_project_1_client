@@ -51,7 +51,7 @@ const SecuritySettings = () => {
             <label className="text-[#4B1E2F] mb-1 block font-medium">
               Current Password
             </label>
-            <div className="flex items-center gap-2 w-full border-2 border-zinc-300 rounded-md p-3.5 mt-2">
+            <div className="flex items-center gap-2 w-full border-2 border-zinc-300 rounded-md p-2.5 md:p-3.5 mt-2">
               <Lock className="text-zinc-400 w-5" />
               <input
                 type={showCurrentPassword ? "text" : "password"}
@@ -78,7 +78,7 @@ const SecuritySettings = () => {
             <label className="text-[#4B1E2F] mb-1 block font-medium">
               New Password
             </label>
-            <div className="flex items-center gap-2 w-full border-2 border-zinc-300 rounded-md p-3.5 mt-2">
+            <div className="flex items-center gap-2 w-full border-2 border-zinc-300 rounded-md p-2.5 md:p-3.5 mt-2">
               <Lock className="text-zinc-400 w-5" />
               <input
                 type={showNewPassword ? "text" : "password"}
@@ -109,7 +109,7 @@ const SecuritySettings = () => {
             <label className="text-[#4B1E2F] mb-1 block font-medium">
               Confirm Password
             </label>
-            <div className="flex items-center gap-2 w-full border-2 border-zinc-300 rounded-md p-3.5 mt-2">
+            <div className="flex items-center gap-2 w-full border-2 border-zinc-300 rounded-md p-2.5 md:p-3.5 mt-2">
               <Lock className="text-zinc-400 w-5" />
               <input
                 type={showConfirmPassword ? "text" : "password"}

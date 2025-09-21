@@ -20,3 +20,12 @@
 .btn-signin{
   @apply bg-[#4B1E2F] text-white px-8 py-2 rounded-md hover:bg-white hover:text-[#4B1E2F] border border-transparent hover:border-black active:scale-95 transition-all cursor-pointer
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-in forwards;
+}

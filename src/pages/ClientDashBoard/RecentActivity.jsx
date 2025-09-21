@@ -1,6 +1,6 @@
 import { ChartColumn, Eye, FileText } from "lucide-react";
 import { useAuth } from "../../AuthProvider/AuthProvider";
-
+import { motion } from "framer-motion";
 const icons = {
   ChartColumn,
   FileText,
@@ -46,7 +46,12 @@ const RecentActivity = () => {
   ];
 
   return (
-    <div className="border border-zinc-200 rounded-lg shadow-lg overflow-hidden bg-white">
+    <motion.div
+      initial={{ y: 40, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="border border-zinc-200 rounded-lg shadow-lg overflow-hidden bg-white"
+    >
       <div className="flex items-center rounded-t-lg p-6 bg-[#F5F5F5]">
         <h3 className="font-medium text-[18px]">Recent Activity</h3>
       </div>
@@ -79,7 +84,7 @@ const RecentActivity = () => {
           );
         })}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,11 +1,13 @@
 import React from "react";
 import { useAuth } from "../../AuthProvider/AuthProvider";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const LoanStatus = () => {
   const { user } = useAuth();
-  const loanStatus = user?.loanInfo?.loanStatus; 
-  // const loanStatus = "approved"; 
+  const loanStatus = user?.loanInfo?.loanStatus;
+  console.log(loanStatus) 
+  
 
   const approvedDetails = user?.loanInfo?.approvedDetails;
   const rejectionDetails = user?.loanInfo?.rejectionDetails;
@@ -31,9 +33,9 @@ const LoanStatus = () => {
           <p className="text-gray-600 text-base sm:text-lg">
             Apply for a new loan to get started.
           </p>
-          <button className="btn-primary">
+          <Link to={"/client-dashboard"} className="btn-primary">
             Apply for Loan
-          </button>
+          </Link>
         </div>
       )}
 

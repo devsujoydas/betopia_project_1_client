@@ -1,5 +1,6 @@
-import React from "react";
-import ProgressBar from "../../hooks/ProgressBar";
+
+import ProgressBar from "../../hooks/ProgressBar"; 
+
 
 const ProgressBar2 = ({ value, max, color }) => {
   const percentage = (value / max) * 100;

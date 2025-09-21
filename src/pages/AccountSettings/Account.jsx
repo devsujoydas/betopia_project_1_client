@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { motion } from "framer-motion";
 import { Toaster } from "react-hot-toast";
 import { useAuth } from "../../AuthProvider/AuthProvider";
@@ -7,10 +7,13 @@ import AccountSidebar from "./AccountSidebar";
 import PersonalInfo from "./PersonalInfo";
 import SecuritySettings from "./SecuritySettings";
 import LoanStatus from "./LoanStatus";
+import UploadProfilePicture from "./UploadProfilePhoto";
 
 const Account = () => {
   const { user, isLoading } = useAuth();
   const [activeTab, setActiveTab] = useState("personal");
+  const [showUploadModal, setShowUploadModal] =
+    useState(false);
 
   if (isLoading) {
     return (
@@ -21,8 +24,13 @@ const Account = () => {
   }
 
   return (
-    <div className="bg-[#F9FAFB] min-h-[80dvh] w-full">
+    <div className="bg-[#F9FAFB] min-h-[80dvh] w-full relative">
       <Toaster position="top-right" />
+
+      <UploadProfilePicture
+        showUploadModal={showUploadModal}
+        setShowUploadModal={setShowUploadModal}
+      />
 
       <div className="max-w-screen-2xl mx-auto px-4 py-10 md:py-26">
         <div className="md:pb-14 pb-5">
@@ -38,6 +46,7 @@ const Account = () => {
             user={user}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
+            setShowUploadModal={setShowUploadModal}
           />
 
           {/* Right Content */}

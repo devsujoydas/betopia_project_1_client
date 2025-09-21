@@ -75,7 +75,7 @@ const PersonalInfo = ({ user }) => {
                   setFormData({ ...formData, [f?.key]: e.target.value })
                 }
                 disabled={!editing}
-                className="w-full outline-none border-2 border-zinc-300 rounded-md p-3.5 mt-2"
+                className="w-full outline-none border-2 border-zinc-300 rounded-md p-2.5 md:p-3.5 mt-2"
               />
             </div>
           ))}
@@ -93,7 +93,7 @@ const PersonalInfo = ({ user }) => {
                     setFormData({ ...formData, [key]: e.target.value })
                   }
                   disabled={!editing}
-                  className="w-full outline-none border-2  border-zinc-300 rounded-md p-3.5 mt-2"
+                  className="w-full outline-none border-2  border-zinc-300 rounded-md p-2.5 md:p-3.5 mt-2"
                 />
               </div>
             ))}
