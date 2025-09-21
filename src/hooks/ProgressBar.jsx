@@ -3,24 +3,19 @@ import { motion } from "framer-motion";
 
 const SEGMENTS = 5;
 const FULL_ANGLE = 220; // 3/4 circle
-const ARC_START_ANGLE = 90; // Start at 90 deg for perfect horizontal baseline
+const ARC_START_ANGLE = 90; // Start at 90 deg for horizontal baseline
 const gapDeg = 7; // gap between segments
-const radius = 130; // bigger radius for bigger arc
+const radius = 130; // radius for the arcs
 const strokeWidth = 25;
-const center = 140; // center moved a bit down to fit arc properly
+const center = 140; // center position
 
-// Calculate total gap degrees
-const totalGapDeg = gapDeg * (SEGMENTS - 1);
-// Total arc degrees available after gaps
-const totalArcDeg = FULL_ANGLE - totalGapDeg;
-
-// Segment sizes adjusted proportionally to fill totalArcDeg
+// Segment sizes (adjusted for total arc)
 const smallArc = 36;
 const bigArc = 81;
 const segmentSizes = [smallArc, smallArc, bigArc, smallArc, smallArc];
 
 const ProgressBar = ({ value }) => {
-  // Calculate starting angle of each segment
+  // Starting angle for each segment
   const segmentStarts = segmentSizes.reduce((acc, size, i) => {
     if (i === 0) acc.push(ARC_START_ANGLE);
     else acc.push(acc[i - 1] + segmentSizes[i - 1] + gapDeg);
@@ -61,6 +56,7 @@ const ProgressBar = ({ value }) => {
     let firstFilledIndex = -1;
     let lastFilledIndex = -1;
 
+    // Determine which segments are partially/fully filled
     for (let i = 0; i < SEGMENTS; i++) {
       const segmentStartPercent = segmentPercents
         .slice(0, i)
@@ -85,10 +81,11 @@ const ProgressBar = ({ value }) => {
 
       const totalPathLength = getPathLength(startAngle, endAngle);
 
-      const isFirstSegment = i === 0;
-      const isLastSegment = i === SEGMENTS - 1;
+      // Background arcs
+      let bgStrokeLinecap = "butt";
+      if (i === 0) bgStrokeLinecap = "round"; // first segment start rounded
+      else if (i === SEGMENTS - 1) bgStrokeLinecap = "round"; // last segment end rounded
 
-      // Background arcs with rounded caps only on first segment start and last segment end
       backgroundArcs.push(
         <path
           key={`bg-${i}`}
@@ -96,12 +93,11 @@ const ProgressBar = ({ value }) => {
           stroke="#e5e7eb"
           fill="none"
           strokeWidth={strokeWidth}
-          strokeLinecap={
-            isFirstSegment ? "round" : isLastSegment ? "round" : "butt"
-          }
+          strokeLinecap={bgStrokeLinecap}
         />
       );
 
+      // Progress arcs
       const segmentStartPercent = segmentPercents
         .slice(0, i)
         .reduce((a, b) => a + b, 0);
@@ -113,10 +109,9 @@ const ProgressBar = ({ value }) => {
         fillRatio = (value - segmentStartPercent) / segmentPercents[i];
 
       if (fillRatio > 0) {
-        const isFirstFilled = i === firstFilledIndex;
-        const isLastFilled = i === lastFilledIndex;
-
-        const strokeLinecap = isFirstFilled || isLastFilled ? "round" : "butt";
+        let strokeLinecap = "butt";
+        if (i === firstFilledIndex) strokeLinecap = "round"; // first filled start rounded
+        if (i === lastFilledIndex) strokeLinecap = "round"; // last filled end rounded
 
         progressArcs.push(
           <motion.path
@@ -140,24 +135,25 @@ const ProgressBar = ({ value }) => {
   };
 
   return (
-    <div className="flex flex-col items-center  w-full relative">
-      <div className=" ">
+    <div className="flex flex-col items-center w-full relative">
+      <div>
         <svg
-          className="rounded-full h-[200px]  md:h-[400px] sm:h-[250px] w-[200px] md:w-[400px] sm:w-[250px] rotate-[54deg]"
-          
+          className="rounded-full h-[200px] md:h-[400px] sm:h-[250px] w-[200px] md:w-[400px] sm:w-[250px] rotate-[54deg]"
           viewBox="-5 0 290 280"
         >
           {generateArcs()}
         </svg>
 
         <div className="md:-mt-68 sm:-mt-45 -mt-36">
-          <div className=" text-center ">
+          <div className="text-center">
             <span className="w-fit font-semibold bg-green-100 text-green-600 md:text-[16px] text-xs sm:text-sm px-4 py-0.5 rounded-full">
               {getLabel(value)}
             </span>
-            <div className="md:text-6xl text-4xl sm:text-5xl font-bold text-primary mt-2 md:mt-4">{value}</div>
+            <div className="md:text-6xl text-4xl sm:text-5xl font-bold text-primary mt-2 md:mt-4">
+              {value}
+            </div>
 
-            <div className="w-full mt-8 sm:mt-12 md:mt-20 flex justify-between text-gray-600 text-sm md:text-xl font-semibold ">
+            <div className="w-full mt-8 sm:mt-12 md:mt-20 flex justify-between text-gray-600 text-sm md:text-xl font-semibold">
               <span>0</span>
               <span className="md:-mr-2 -mr-3 sm:-mr-5">100</span>
             </div>

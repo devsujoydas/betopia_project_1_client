@@ -33,10 +33,7 @@ const Header = () => {
 
           <NavLink to={"/about"} className={({ isActive }) => `text-zinc-700 hover:text-[#4B1E2F] transition-colors ${isActive ? "font-semibold" : ""}`}>About</NavLink>
 
-          <NavLink to={"/admin-dashboard"} className={({ isActive }) => `text-zinc-700 hover:text-[#4B1E2F] transition-colors ${isActive ? "font-semibold" : ""}`}>Admin DashBoard</NavLink>
-
-          <NavLink to={"/client-dashboard"} className={({ isActive }) => `text-zinc-700 hover:text-[#4B1E2F] transition-colors ${isActive ? "font-semibold" : ""}`}>Client DashBoard</NavLink>
-        </nav>
+       </nav>
 
         <div className="hidden md:flex items-center space-x-4">
           {!user ? (
@@ -60,7 +57,7 @@ const Header = () => {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="absolute mt-2 w-40 bg-white border border-zinc-200 rounded-xl p-3 shadow-lg flex flex-col right-0 "
+                    className="absolute mt-2 w-fit   bg-white border border-zinc-200 rounded-xl p-3 shadow-lg flex flex-col right-0 "
                   >
                     <Link
                       to="/account"
@@ -70,11 +67,18 @@ const Header = () => {
                       <CircleUser className="w-5" />Account
                     </Link>
                     <Link
-                      to="/client-dashboard"
+                      to="/admin/dashboard"
                       className="px-4 py-2 text-sm hover:bg-zinc-100 flex items-center gap-2 rounded-md"
                       onClick={() => setProfileDropdownOpen(false)}
                     >
-                      <LayoutDashboard className="w-5" />Dashboard
+                      <LayoutDashboard className="w-5" />A.Dashboard
+                    </Link>
+                    <Link
+                      to="/client/dashboard"
+                      className="px-4 py-2 text-sm hover:bg-zinc-100 flex items-center gap-2 rounded-md"
+                      onClick={() => setProfileDropdownOpen(false)}
+                    >
+                      <LayoutDashboard className="w-5" />C.Dashboard
                     </Link>
                     <button
                       onClick={signOut}
@@ -111,12 +115,6 @@ const Header = () => {
 
               <NavLink
                 onClick={() => setMobileMenuOpen(false)} to={"/about"} className="block w-full">About</NavLink>
-
-              <NavLink
-                onClick={() => setMobileMenuOpen(false)} to={"/admin-dashboard"} className="block w-full">Admin DashBoard</NavLink>
-
-              <NavLink
-                onClick={() => setMobileMenuOpen(false)} to={"/client-dashboard"} className="block w-full">Client DashBoard</NavLink>
 
               {!user ? (
                 <NavLink

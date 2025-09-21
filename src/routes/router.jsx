@@ -10,9 +10,11 @@ import CompleteProfile from "../pages/CompleteProfile/CompleteProfile";
 import ProtectedRoute from "./ProtectedRoute";
 import Account from "../pages/AccountSettings/Account";
 import ClientDashBoard from "../pages/ClientDashBoard/ClientDashBoard";
-import AdminDashBoard from "../pages/AdminDashBoard/AdminDashBoard";
+import AdminDashBoard from "../pages/Admin/AdminDashBoard";
 import MainLayout from "../layout/MainLayout";
 import AuthProtectedRoute from "./AuthProtectedRoute";
+import Admin from "../pages/Admin/Admin";
+import AdminSettings from "../pages/Admin/AdminSettings";
 
 const router = createBrowserRouter([
   {
@@ -24,15 +26,19 @@ const router = createBrowserRouter([
       { path: "about", element: <About /> },
       {
         path: "account",
-        element: <ProtectedRoute><Account /></ProtectedRoute>,
+        element: (
+          <ProtectedRoute>
+            <Account />
+          </ProtectedRoute>
+        ),
       },
       {
-        path: "client-dashboard",
-        element: <ProtectedRoute><ClientDashBoard /></ProtectedRoute>,
-      },
-      {
-        path: "admin-dashboard",
-        element: <ProtectedRoute><AdminDashBoard /></ProtectedRoute>,
+        path: "client/dashboard",
+        element: (
+          <ProtectedRoute>
+            <ClientDashBoard />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
@@ -42,19 +48,50 @@ const router = createBrowserRouter([
     children: [
       {
         path: "signin",
-        element: <AuthProtectedRoute> <Signin /></AuthProtectedRoute>,
+        element: (
+          <AuthProtectedRoute>
+            {" "}
+            <Signin />
+          </AuthProtectedRoute>
+        ),
       },
       {
         path: "signup",
-        element: <AuthProtectedRoute><Signup /></AuthProtectedRoute>,
+        element: (
+          <AuthProtectedRoute>
+            <Signup />
+          </AuthProtectedRoute>
+        ),
       },
       {
         path: "reset-password",
-        element: <AuthProtectedRoute><ResetPassword /></AuthProtectedRoute>,
+        element: (
+          <AuthProtectedRoute>
+            <ResetPassword />
+          </AuthProtectedRoute>
+        ),
       },
       {
         path: "complete-profile",
-        element: <ProtectedRoute><CompleteProfile /></ProtectedRoute>,
+        element: (
+          <ProtectedRoute>
+            <CompleteProfile />
+          </ProtectedRoute>
+        ),
+      },
+    ],
+  },
+  {
+    path: "admin",
+    element: <Admin />,
+    children: [
+      {
+        path: "dashboard",
+        element: <AdminDashBoard />,
+      },
+      {
+        path: "settings",
+        element: <AdminSettings />,
       },
     ],
   },

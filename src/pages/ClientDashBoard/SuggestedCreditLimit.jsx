@@ -134,8 +134,6 @@ const SuggestedCreditLimit = () => {
                   type="submit"
                   disabled={isSubmitting}
                   className="btn-primary"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                 >
                   {isSubmitting ? "Submitting..." : "Submit Application"}
                 </motion.button>

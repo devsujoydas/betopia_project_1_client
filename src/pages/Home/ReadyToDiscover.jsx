@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const ReadyToDiscover = () => {
   return (
@@ -15,14 +16,14 @@ const ReadyToDiscover = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.4, duration: 0.5 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
           className="space-y-5 px-10"
         >
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.5 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
             className="md:text-3xl text-xl font-semibold text-primary"
           >
             Ready to discover your credit potential?
@@ -32,7 +33,7 @@ const ReadyToDiscover = () => {
             initial={{ opacity: 0, y: -10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.8, duration: 0.5 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
             className="md:text-[14px] text-sm"
           >
             Get your credit score now and see what credit limit you qualify for.{" "}
@@ -40,7 +41,7 @@ const ReadyToDiscover = () => {
             It's quick, free, and completely transparent.
           </motion.p>
 
-          <button className="btn-primary">Get Your Credit Score</button>
+          <Link to={"/client/dashboard"} className="btn-primary">Get Your Credit Score</Link>
         </motion.div>
       </motion.div>
     </div>

@@ -1,4 +1,5 @@
 
+import { useAuth } from "../../AuthProvider/AuthProvider";
 import ProgressBar from "../../hooks/ProgressBar"; 
 
 
@@ -16,6 +17,9 @@ const ProgressBar2 = ({ value, max, color }) => {
 };
 
 const YourCreditScore = () => {
+
+  const {user} = useAuth()
+
   const factors = [
     { label: "Annual Income (FCFA)", value: 30, max: 30, color: "#16A34A" }, // green-600
     { label: "Electricity Bill (FCFA)", value: 25, max: 30, color: "#2563EB" }, // blue-600
@@ -38,7 +42,7 @@ const YourCreditScore = () => {
       {/* Body */}
       <div className=" p-5 md:p-10">
         {/* Score Section */}
-        <ProgressBar value={85} />
+        <ProgressBar value={user?.financialInfo?.creditScore} />
         <p className="text-center my-6 md:my-14 md:text-[16px] text-xs">
           Your credit score is in the excellent range. This indicates excellent
           creditworthiness.
