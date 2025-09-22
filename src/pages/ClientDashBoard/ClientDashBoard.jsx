@@ -6,8 +6,7 @@ import RecentActivity from "./RecentActivity";
 import FinancialSummary from "./FinancialSummary";
 import { motion } from "framer-motion";
 const ClientDashBoard = () => {
-  const { user } = useAuth();
-  console.log(user);
+  const { user } = useAuth(); 
   return (
     <div className="bg-[#F9FAFB]">
       <div className="max-w-screen-2xl mx-5 xl:mx-auto py-10 md:py-20">

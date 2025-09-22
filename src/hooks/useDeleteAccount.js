@@ -1,28 +1,28 @@
-// hooks/useSignOut.js
+// hooks/useDeleteAccount.js
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import api from "../utils/api";
 import { useAuth } from "../AuthProvider/AuthProvider";
 
-export default function useSignOut() {
+export default function useDeleteAccount() {
   const navigate = useNavigate();
   const { setUser } = useAuth();
 
-  const handleSignOut = async () => {
+  const handleDeleteAccount = async () => {
     try {
-      await api.post("/auth/signout");
-      
+      const res = await api.delete("/users/account-delete");
+
       // 🟢 Clear context + localStorage
       setUser(null);
       localStorage.removeItem("user");
 
-      toast.success("Signed out successfully");
+      toast.success(res.data.message || "Account deleted successfully");
       navigate("/auth/signin", { replace: true });
     } catch (err) {
-      console.error("Logout error:", err);
-      toast.error("Failed to sign out");
+      console.error("Account delete error:", err);
+      toast.error(err?.response?.data?.message || "Failed to delete account");
     }
   };
 
-  return handleSignOut;
+  return handleDeleteAccount;
 }

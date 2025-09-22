@@ -75,9 +75,7 @@ const router = createBrowserRouter([
       {
         path: "complete-profile",
         element: (
-          <ProtectedRoute>
-            <CompleteProfile />
-          </ProtectedRoute>
+          <CompleteProfile />
         ),
       },
     ],

@@ -1,10 +1,16 @@
 // AdminClientList.jsx
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Eye, Funnel } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import api from "../../utils/api";
 import ClientDetailsModal from "./ClientDetailsModal";
 
 const TABS = ["All Clients", "Pending", "Approved", "Rejected"];
+
+const fetchClients = async () => {
+  const res = await api.get("/dashboard");
+  return res.data;
+};
 
 const AdminClientList = () => {
   const [activeTab, setActiveTab] = useState("All Clients");
@@ -16,36 +22,22 @@ const AdminClientList = () => {
     minIncome: "",
     status: "",
   });
-  const [clients, setClients] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [summary, setSummary] = useState({});
 
-  // Modal state
   const [isOpen, setIsOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState(null);
 
-  // Fetch clients
-  const fetchClients = async () => {
-    setLoading(true);
-    try {
-      const params = { ...filters };
-      if (activeTab !== "All Clients") params.status = activeTab.toLowerCase();
-      const res = await api.get("/dashboard", { params });
-      setClients(res.data.users || []);
-      setSummary(res.data.summary || {});
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Fetch once & cache
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["clients"],
+    queryFn: fetchClients,
+    staleTime: 5 * 60 * 1000, // 5 min cache
+  });
 
-  useEffect(() => {
-    fetchClients();
-  }, [activeTab, filters]);
+  const clients = data?.users || [];
+  const summary = data?.summary || {};
 
   const handleFilterChange = (e) =>
-    setFilters({ ...filters, [e.target.name]: e.target.value });
+    setFilters((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   const getTabCount = (tab) => {
     switch (tab) {
@@ -85,6 +77,40 @@ const AdminClientList = () => {
   const getScoreText = (score) =>
     score >= 75 ? "High" : score >= 50 ? "Medium" : "Low";
 
+  // Apply filters + tab locally
+  const filteredClients = useMemo(() => {
+    return clients.filter((c) => {
+      const cityMatch = filters.city
+        ? c?.contactInfo?.city
+            ?.toLowerCase()
+            .includes(filters.city.toLowerCase())
+        : true;
+
+      const score = c.financialInfo?.creditScore || 0;
+      const scoreMatch =
+        (filters.minScore ? score >= Number(filters.minScore) : true) &&
+        (filters.maxScore ? score <= Number(filters.maxScore) : true);
+
+      const income = c.financialInfo?.income || 0;
+      const incomeMatch = filters.minIncome
+        ? income >= Number(filters.minIncome)
+        : true;
+
+      const statusMatch = filters.status
+        ? c.loanInfo?.loanStatus?.toLowerCase() ===
+          filters.status.toLowerCase()
+        : true;
+
+      const tabMatch =
+        activeTab === "All Clients"
+          ? true
+          : c.loanInfo?.loanStatus?.toLowerCase() ===
+            activeTab.toLowerCase();
+
+      return cityMatch && scoreMatch && incomeMatch && statusMatch && tabMatch;
+    });
+  }, [clients, filters, activeTab]);
+
   return (
     <div className="bg-white shadow-lg border border-zinc-200 rounded-md py-6 px-3 sm:px-5">
       {/* Header */}
@@ -117,7 +143,7 @@ const AdminClientList = () => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`cursor-pointer relative pb-2 font-medium mt-3  ${
+              className={`cursor-pointer relative pb-2 font-medium mt-3 ${
                 isActive
                   ? "text-black after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-black"
                   : "text-gray-500 hover:text-black"
@@ -219,14 +245,20 @@ const AdminClientList = () => {
             </tr>
           </thead>
           <tbody>
-            {loading ? (
+            {isLoading ? (
               <tr>
                 <td colSpan="6" className="text-center text-gray-500 py-6">
                   Loading...
                 </td>
               </tr>
-            ) : clients.length > 0 ? (
-              clients.map((c, idx) => (
+            ) : isError ? (
+              <tr>
+                <td colSpan="6" className="text-center text-red-500 py-6">
+                  Failed to load clients.
+                </td>
+              </tr>
+            ) : filteredClients.length > 0 ? (
+              filteredClients.map((c, idx) => (
                 <tr key={c._id}>
                   <td className="px-3 py-2 sm:py-5 text-center">{idx + 1}</td>
                   <td className="px-3 sm:px-8 py-2 sm:py-5">

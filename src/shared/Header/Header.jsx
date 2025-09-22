@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { CircleUser, LayoutDashboard, LogOut, Menu, X } from "lucide-react";
+import { CircleUser, LayoutDashboard, LogOut, Menu, UserX, X } from "lucide-react";
 import { useAuth } from "../../AuthProvider/AuthProvider";
 import useSignOut from "../../hooks/useSignOut";
+import useDeleteAccount from "../../hooks/useDeleteAccount";
 
 const Header = () => {
   const { user } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const signOut = useSignOut();
+  const deleteAccount = useDeleteAccount();
 
   return (
     <header className="border-b border-zinc-200 relative z-50">
@@ -103,6 +105,16 @@ const Header = () => {
                       className="px-4 py-2 text-sm text-left hover:bg-red-100 text-red-500 cursor-pointer flex items-center gap-2 rounded-md"
                     >
                       <LogOut className="w-5" /> Sign Out
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        deleteAccount();
+                        setProfileDropdownOpen(false);
+                      }}
+                      className="px-4 py-2 text-sm text-left hover:bg-red-100 text-red-500 cursor-pointer flex items-center gap-2 rounded-md"
+                    >
+                      <UserX className="w-5 tracking-tighter" /> Delete User
                     </button>
                   </motion.div>
                 )}

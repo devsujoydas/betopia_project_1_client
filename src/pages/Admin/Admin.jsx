@@ -27,7 +27,6 @@ const Admin = () => {
         </button>
       </div>
 
-      {/* Sidebar */}
       <div
         className={`
           fixed inset-y-0 left-0 z-50 transform bg-[#4B1E2F] text-white  p-5 flex flex-col justify-between transition-transform duration-300
@@ -68,7 +67,6 @@ const Admin = () => {
         />
       )}
 
-      {/* Main Content */}
       <div className="md:col-span-10 p-4 sm:p-6 lg:p-10 ml-0 md:ml-0">
         <Outlet />
       </div>

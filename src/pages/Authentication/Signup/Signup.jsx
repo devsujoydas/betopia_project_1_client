@@ -9,35 +9,37 @@ import { useAuth } from "../../../AuthProvider/AuthProvider";
 
 const Signup = () => {
   const { setUser } = useAuth();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+
   const passwordValue = watch("password", "");
 
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      await api
-        .post("/auth/register", {
-          email: data.email,
-          phone: data.phone,
-          password: data.password,
-        })
-        .then((res) => {
-          console.log(res.data);
-          setUser(res.data);
-          toast.success("Account created successfully!");
-          navigate("/complete-profile");
-        });
+      const res = await api.post("/auth/register", {
+        email: data.email,
+        phone: data.phone,
+        password: data.password,
+      });
+
+      setUser(res.data);
+      if (res.data) {
+        navigate("/auth/complete-profile");
+        toast.success("Account created successfully!");
+      }
     } catch (err) {
-      toast.error(err?.response?.data?.message || "Server error");
+      toast.error(err?.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -48,9 +50,10 @@ const Signup = () => {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
-      className="max-w-[500px] w-full xl:mx-auto mx-3 "
+      className="max-w-[500px] w-full xl:mx-auto mx-3"
     >
       <Toaster position="top-right" reverseOrder={false} />
+
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="rounded-2xl border border-zinc-200 shadow-md p-8 w-full bg-white"
@@ -70,7 +73,10 @@ const Signup = () => {
               className="outline-none w-full"
               {...register("email", {
                 required: "Email is required",
-                pattern: { value: /\S+@\S+\.\S+/, message: "Invalid email" },
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: "Invalid email address",
+                },
               })}
             />
           </div>
@@ -88,7 +94,9 @@ const Signup = () => {
               type="text"
               placeholder="Enter your phone number"
               className="outline-none w-full"
-              {...register("phone", { required: "Phone is required" })}
+              {...register("phone", {
+                required: "Phone number is required",
+              })}
             />
           </div>
           {errors.phone && (
@@ -181,7 +189,12 @@ const Signup = () => {
           <p className="text-red-600 text-sm mb-4">{errors.terms.message}</p>
         )}
 
-        <button type="submit" disabled={loading} className="btn-primary w-full">
+        {/* Submit */}
+        <button
+          type="submit"
+          disabled={loading}
+          className="btn-primary w-full disabled:opacity-70"
+        >
           {loading ? "Creating Account..." : "Sign Up"}
         </button>
 

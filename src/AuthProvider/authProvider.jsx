@@ -1,3 +1,4 @@
+// frontend/src/AuthProvider/AuthProvider.jsx
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import api from "../utils/api";
@@ -15,7 +16,11 @@ const fetchProfile = async () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  // 🟢 First load from localStorage if exists
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
   const {
     data,
@@ -29,17 +34,31 @@ export const AuthProvider = ({ children }) => {
     retry: 1,
     refetchOnWindowFocus: false,
   });
- 
+
+  // 🟢 Whenever API gives new data, update state + localStorage
   useEffect(() => {
     if (data !== undefined) {
-      console.log(data)
       setUser(data);
+      if (data) {
+        localStorage.setItem("user", JSON.stringify(data));
+      } else {
+        localStorage.removeItem("user"); // clear if null
+      }
     }
   }, [data]);
 
+  // 🟢 Keep localStorage synced if setUser is called manually
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("user");
+    }
+  }, [user]);
+
   const value = { user, setUser, isLoading, isError, isFetching };
 
-  if (isFetching) {
+  if (isFetching && !user) {
     return (
       <div className="h-screen flex justify-center items-center">
         <div className="h-10 w-10 border-y-2 rounded-full animate-spin"></div>
