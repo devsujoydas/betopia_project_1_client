@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Eye, Funnel } from "lucide-react";
 import api from "../../utils/api";
+import ClientDetailsModal from "./ClientDetailsModal";
 
 const TABS = ["All Clients", "Pending", "Approved", "Rejected"];
 
@@ -19,6 +20,11 @@ const AdminClientList = () => {
   const [loading, setLoading] = useState(false);
   const [summary, setSummary] = useState({});
 
+  // Modal state
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedClient, setSelectedClient] = useState(null);
+
+  // Fetch clients
   const fetchClients = async () => {
     setLoading(true);
     try {
@@ -75,11 +81,13 @@ const AdminClientList = () => {
       : score >= 50
       ? "text-[#E0AB0B]"
       : "text-[#BD0202]";
+
   const getScoreText = (score) =>
     score >= 75 ? "High" : score >= 50 ? "Medium" : "Low";
 
   return (
     <div className="bg-white shadow-lg border border-zinc-200 rounded-md py-6 px-3 sm:px-5">
+      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
         <h1 className="text-primary font-medium text-xl">Client List</h1>
         <button
@@ -109,7 +117,7 @@ const AdminClientList = () => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`relative pb-2 font-medium mt-3 ${
+              className={`cursor-pointer relative pb-2 font-medium mt-3  ${
                 isActive
                   ? "text-black after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-black"
                   : "text-gray-500 hover:text-black"
@@ -169,12 +177,12 @@ const AdminClientList = () => {
             />
           </div>
           <div className="md:flex-1">
-              <h1 className="font-medium text-sm text-black">Status</h1>
+            <h1 className="font-medium text-sm text-black">Status</h1>
             <select
               name="status"
               value={filters.status}
               onChange={handleFilterChange}
-              className="border border-gray-300 bg-[#F0F0F0] w-full outline-none rounded-md px-3 py-2  mt-2 text-sm"
+              className="border border-gray-300 bg-[#F0F0F0] w-full outline-none rounded-md px-3 py-2 mt-2 text-sm"
             >
               <option value="">All Status</option>
               <option value="Pending">Pending</option>
@@ -186,14 +194,14 @@ const AdminClientList = () => {
       )}
 
       {/* Table */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto mt-5">
         <table className="w-full border-b border-zinc-200 rounded-md text-sm sm:text-base md:text-lg">
           <thead className="bg-gray-50 text-gray-600">
             <tr>
               <th className="text-center font-semibold px-3 py-2 sm:px-4 sm:py-5">
                 ID
               </th>
-              <th className="text-left font-semibold px-3 py-2 sm:px-4 sm:py-5">
+              <th className="text-left font-semibold px-3 py-2 sm:px-8 sm:py-5">
                 City
               </th>
               <th className="text-left font-semibold px-3 py-2 sm:px-4 sm:py-5">
@@ -221,7 +229,7 @@ const AdminClientList = () => {
               clients.map((c, idx) => (
                 <tr key={c._id}>
                   <td className="px-3 py-2 sm:py-5 text-center">{idx + 1}</td>
-                  <td className="px-3 py-2 sm:py-5">
+                  <td className="px-3 sm:px-8 py-2 sm:py-5">
                     {c?.contactInfo?.city || "-"}
                   </td>
                   <td className="px-3 py-2 sm:py-5">
@@ -254,7 +262,13 @@ const AdminClientList = () => {
                     </span>
                   </td>
                   <td className="px-3 py-2 sm:py-5">
-                    <button className="text-primary hover:underline text-sm">
+                    <button
+                      onClick={() => {
+                        setSelectedClient(c);
+                        setIsOpen(true);
+                      }}
+                      className="text-primary cursor-pointer hover:underline text-sm"
+                    >
                       <Eye className="w-5 h-5" />
                     </button>
                   </td>
@@ -270,6 +284,15 @@ const AdminClientList = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Modal */}
+      {isOpen && (
+        <ClientDetailsModal
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          info={selectedClient}
+        />
+      )}
     </div>
   );
 };

@@ -25,8 +25,7 @@ const Signin = () => {
         email: data.email,
         password: data.password,
       })
-      .then(res=>{
-        console.log(res)
+      .then(res=>{ 
         setUser(res.data)
         toast.success("Logged in successfully!");
         navigate("/account")

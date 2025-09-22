@@ -53,11 +53,17 @@ const AdminDashBoard = () => {
                 className="flex items-center justify-center rounded-full w-10 h-10 md:w-12 md:h-12"
                 style={{ backgroundColor: data.iconBg }}
               >
-                <Icon className="w-5 h-5 md:w-6 md:h-6" color={data.iconColor} />
+                <Icon
+                  className="w-5 h-5 md:w-6 md:h-6"
+                  color={data.iconColor}
+                />
               </div>
               <div>
                 <h1 className="text-lg text-gray-600">{data.title}</h1>
-                <p className="font-medium text-[1rem] md:text-xl mt-1" style={{ color: data.iconColor }}>
+                <p
+                  className="font-medium text-[1rem] md:text-xl mt-1"
+                  style={{ color: data.iconColor }}
+                >
                   {data.amount}
                 </p>
               </div>

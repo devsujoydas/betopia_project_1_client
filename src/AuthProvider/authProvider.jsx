@@ -32,6 +32,7 @@ export const AuthProvider = ({ children }) => {
  
   useEffect(() => {
     if (data !== undefined) {
+      console.log(data)
       setUser(data);
     }
   }, [data]);

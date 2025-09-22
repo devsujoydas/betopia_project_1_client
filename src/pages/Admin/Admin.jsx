@@ -1,7 +1,7 @@
 // Admin.jsx
 import { LayoutDashboard, LogOut, Settings, Menu } from "lucide-react";
 import React, { useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import useSignOut from "../../hooks/useSignOut";
 
 const Admin = () => {
@@ -18,9 +18,9 @@ const Admin = () => {
       {/* Mobile Header */}
       <div className="flex items-center justify-between md:hidden p-4 bg-[#4B1E2F] text-white">
         <div className="flex items-center gap-2">
-          <div className="bg-white w-fit px-3 py-2 rounded-md">
+          <Link to={"/"} className="bg-white w-fit px-3 py-2 rounded-md">
             <img src="/logo.png" alt="Logo" className="w-20 sm:w-24" />
-          </div>
+          </Link>
         </div>
         <button onClick={() => setSidebarOpen(!sidebarOpen)}>
           <Menu className="w-6 h-6" />
@@ -37,9 +37,9 @@ const Admin = () => {
       >
         <div>
           <div className="hidden md:flex justify-center items-center mb-8">
-            <div className="bg-white w-fit px-4 py-3 rounded-md">
+            <Link to={"/"} className="bg-white w-fit px-4 py-3 rounded-md">
               <img src="/logo.png" alt="Logo" />
-            </div>
+            </Link>
           </div>
 
           <nav className="flex flex-col gap-2">

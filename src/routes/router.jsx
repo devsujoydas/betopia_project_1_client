@@ -15,6 +15,7 @@ import MainLayout from "../layout/MainLayout";
 import AuthProtectedRoute from "./AuthProtectedRoute";
 import Admin from "../pages/Admin/Admin";
 import AdminSettings from "../pages/Admin/AdminSettings";
+import AdminProtectedRoute from "./AdminProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -83,7 +84,11 @@ const router = createBrowserRouter([
   },
   {
     path: "admin",
-    element: <Admin />,
+    element: (
+      <AdminProtectedRoute>
+        <Admin />
+      </AdminProtectedRoute>
+    ),
     children: [
       {
         path: "dashboard",
