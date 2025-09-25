@@ -265,6 +265,9 @@ export default function ClientDetailsModal({ isOpen, onClose, info }) {
             <div className="bg-gray-100 p-4 rounded-md">
               <MiniProgressBar value={info.financialInfo.creditScore}/>
             </div>
+            <div className="bg-gray-100 p-4 rounded-md">
+              <MiniProgressBar value={info.financialInfo.creditScore}/>
+            </div>
           </div>
         </div>
       </div>
