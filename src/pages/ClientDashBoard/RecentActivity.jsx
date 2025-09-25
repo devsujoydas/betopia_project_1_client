@@ -1,6 +1,7 @@
 import { ChartColumn, Eye, FileText } from "lucide-react";
 import { useAuth } from "../../AuthProvider/AuthProvider";
 import { motion } from "framer-motion";
+
 const icons = {
   ChartColumn,
   FileText,
@@ -30,18 +31,21 @@ const RecentActivity = () => {
       iconBg: "#E0AB0B33",
       iconColor: "#E0AB0B",
       title: "Credit score calculated",
+      dateKey: "createdAt", // keeping createdAt for now
     },
     {
       icon: "FileText",
       iconBg: "#441B2B33",
       iconColor: "#4B1E2F",
       title: "Profile information submitted",
+      dateKey: "updatedAt", // use updatedAt here
     },
     {
       icon: "Eye",
       iconBg: "#28282833",
       iconColor: "#282828",
       title: "Account created",
+      dateKey: "createdAt", // use createdAt here
     },
   ];
 
@@ -59,6 +63,7 @@ const RecentActivity = () => {
       <div className="md:m-6 m-5 grid gap-5">
         {recentActivityData.map((data, idx) => {
           const Icon = icons[data.icon];
+          const dateValue = user?.[data.dateKey]; // dynamically pick createdAt / updatedAt
           return (
             <div
               key={idx}
@@ -78,7 +83,7 @@ const RecentActivity = () => {
               </div>
 
               <p className="text-zinc-500 text-xs md:text-sm">
-                {getDaysAgo(user?.createdAt)}
+                {getDaysAgo(dateValue)}
               </p>
             </div>
           );

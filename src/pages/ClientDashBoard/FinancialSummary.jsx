@@ -16,21 +16,23 @@ const FinancialSummary = () => {
       iconBg: "#039B0633",
       iconColor: "#039B06",
       title: "Annual Income",
-      amount: `FCFA ${user?.financialInfo?.annualIncome}`,
+      amount: `FCFA ${user?.financialInfo?.annualIncome || 0}`,
     },
     {
       icon: "CreditCard",
       iconBg: "#4B1E2F33",
       iconColor: "#4B1E2F",
       title: "Value of Land ownership",
-      amount: `FCFA ${user?.financialInfo?.landValue}`,
+      amount: `FCFA ${user?.financialInfo?.landValue || 0}`,
     },
     {
       icon: "ChartColumn",
       iconBg: "#E0AB0B33",
       iconColor: "#E0AB0B",
       title: "Debt-to-Income Ratio",
-      amount: "17/17",
+      amount: user?.financialInfo?.debtToIncomeRatio
+        ? `${user.financialInfo.debtToIncomeRatio}%`
+        : "0%", // যদি ডাটা না থাকে
     },
   ];
 
@@ -64,7 +66,9 @@ const FinancialSummary = () => {
               </div>
               <div>
                 <h1 className="text-sm text-gray-600">{data.title}</h1>
-                <p className="font-medium text-sm md:text-xl mt-1 ">{data.amount}</p>
+                <p className="font-medium text-sm md:text-xl mt-1 ">
+                  {data.amount}
+                </p>
               </div>
             </div>
           );

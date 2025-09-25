@@ -16,7 +16,7 @@ const ClientDashBoard = () => {
           transition={{ duration: 0.5 }}
           className="text-3xl text-primary font-medium"
         >
-          {`${user.personalInfo.firstName} ${user.personalInfo.lastName}`} –
+          {`${user?.personalInfo?.firstName} ${user?.personalInfo?.lastName}`} –
           Dashboard
         </motion.h1>
 

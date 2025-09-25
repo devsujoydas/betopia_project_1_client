@@ -33,7 +33,7 @@ const LoanStatus = () => {
           <p className="text-gray-600 text-base sm:text-lg">
             Apply for a new loan to get started.
           </p>
-          <Link to={"/client-dashboard"} className="btn-primary">
+          <Link to={"/client/dashboard"} className="btn-primary">
             Apply for Loan
           </Link>
         </div>

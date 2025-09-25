@@ -1,8 +1,7 @@
-
 import { useAuth } from "../../AuthProvider/AuthProvider";
 import ProgressBar from "../../hooks/ProgressBar"; 
 
-
+// Sub-component: progress bar for each factor
 const ProgressBar2 = ({ value, max, color }) => {
   const percentage = (value / max) * 100;
 
@@ -17,19 +16,33 @@ const ProgressBar2 = ({ value, max, color }) => {
 };
 
 const YourCreditScore = () => {
+  const { user } = useAuth();
 
-  const {user} = useAuth()
-
+  // Factors dynamically calculated from user financial info
   const factors = [
-    { label: "Annual Income (FCFA)", value: 30, max: 30, color: "#16A34A" }, // green-600
-    { label: "Electricity Bill (FCFA)", value: 25, max: 30, color: "#2563EB" }, // blue-600
+    {
+      label: "Annual Income (FCFA)",
+      value: user?.financialInfo?.annualIncome || 0,
+      max: 100000, // Maximum expected value for scaling
+      color: "#16A34A",
+    },
+    {
+      label: "Electricity Bill (FCFA)",
+      value: user?.financialInfo?.electricityBill || 0,
+      max: 10000, // Scale appropriately
+      color: "#2563EB",
+    },
     {
       label: "Mobile Money Balance (FCFA)",
-      value: 20,
-      max: 30,
+      value: user?.financialInfo?.mobileMoneyBalance || 0,
+      max: 50000, // Scale appropriately
       color: "#4B1E2F",
-    }, 
-  ];
+    },
+  ].map(factor => {
+    // Convert actual value to 0-30 points scale for UI
+    const points = Math.min(Math.round((factor.value / factor.max) * 30), 30);
+    return { ...factor, value: points };
+  });
 
   return (
     <div className="">
@@ -40,9 +53,9 @@ const YourCreditScore = () => {
       </div>
 
       {/* Body */}
-      <div className=" p-5 md:p-10">
+      <div className="p-5 md:p-10">
         {/* Score Section */}
-        <ProgressBar value={user?.financialInfo?.creditScore} />
+        <ProgressBar value={user?.financialInfo?.creditScore || 0} />
         <p className="text-center my-6 md:my-14 md:text-[16px] text-xs">
           Your credit score is in the excellent range. This indicates excellent
           creditworthiness.
@@ -63,12 +76,12 @@ const YourCreditScore = () => {
                     {factor.label}
                   </p>
                   <p className="md:text-sm text-xs font-semibold text-gray-900">
-                    {factor.value}/{factor.max}
+                    {factor.value}/{30}
                   </p>
                 </div>
                 <ProgressBar2
                   value={factor.value}
-                  max={factor.max}
+                  max={30} // Scale for UI
                   color={factor.color}
                 />
               </div>

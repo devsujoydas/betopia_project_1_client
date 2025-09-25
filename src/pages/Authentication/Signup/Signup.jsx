@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, Phone, Lock, Eye, EyeOff } from "lucide-react";
+import { Mail, Phone, Lock, Eye, EyeClosed } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
@@ -70,7 +70,7 @@ const Signup = () => {
             <input
               type="email"
               placeholder="Enter your email"
-              className="outline-none w-full"
+              className="outline-none w-full h-full"
               {...register("email", {
                 required: "Email is required",
                 pattern: {
@@ -93,7 +93,7 @@ const Signup = () => {
             <input
               type="text"
               placeholder="Enter your phone number"
-              className="outline-none w-full"
+              className="outline-none w-full h-full"
               {...register("phone", {
                 required: "Phone number is required",
               })}
@@ -114,7 +114,7 @@ const Signup = () => {
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Enter password"
-              className="outline-none w-full"
+              className="outline-none w-full h-full"
               {...register("password", {
                 required: "Password is required",
                 minLength: {
@@ -127,7 +127,7 @@ const Signup = () => {
               onClick={() => setShowPassword(!showPassword)}
               className="cursor-pointer"
             >
-              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              {showPassword ? <Eye size={18} /> : <EyeClosed size={18} />}
             </span>
           </div>
           {errors.password && (
@@ -147,7 +147,7 @@ const Signup = () => {
             <input
               type={showConfirmPassword ? "text" : "password"}
               placeholder="Confirm password"
-              className="outline-none w-full"
+              className="outline-none w-full h-full"
               {...register("confirmPassword", {
                 required: "Confirm Password is required",
                 validate: (value) =>
@@ -158,7 +158,7 @@ const Signup = () => {
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               className="cursor-pointer"
             >
-              {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              {showConfirmPassword ? <Eye size={18} /> : <EyeClosed size={18} />}
             </span>
           </div>
           {errors.confirmPassword && (

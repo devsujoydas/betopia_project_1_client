@@ -1,9 +1,10 @@
 import { CircleCheckBig, DollarSign } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import toast, { ToastBar } from "react-hot-toast";
 import api from "../../utils/api";
 import { motion } from "framer-motion";
+import { useAuth } from "../../AuthProvider/AuthProvider";
 
 const SuggestedCreditLimit = () => {
   const {
@@ -12,17 +13,19 @@ const SuggestedCreditLimit = () => {
     formState: { errors, isSubmitting },
     reset,
   } = useForm();
+  const { setUser } = useAuth();
 
   const onSubmit = async (data) => {
     try {
-      const res = await api.post(
-        `/users/loans/apply`,
-        { amountRequested: Number(data.amountRequested) },
-        { withCredentials: true }
-      );
+      await api
+        .post(`/users/loans/apply`, {
+          amountRequested: Number(data.amountRequested),
+        })
+        .then((res) => {
+          toast.success("Loan application submitted!");
+          setUser(res.data);
+        });
 
-      console.log(res.data);
-      toast.success(res.data.message || "Loan application submitted!");
       reset();
     } catch (error) {
       console.error(error);
@@ -36,7 +39,7 @@ const SuggestedCreditLimit = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-    >
+    > 
       {/* Suggested Credit Limit */}
       <motion.div
         className="bg-white border border-zinc-200 rounded-lg shadow-lg overflow-hidden"

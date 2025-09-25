@@ -1,4 +1,3 @@
-// AdminDashboard.jsx
 import React, { useEffect, useState } from "react";
 import { CircleCheckBig, Clock, Users } from "lucide-react";
 import api from "../../utils/api";

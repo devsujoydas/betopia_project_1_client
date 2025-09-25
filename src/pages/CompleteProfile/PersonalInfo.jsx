@@ -1,8 +1,8 @@
-
-
 const PersonalInfo = ({ register, errors }) => (
   <div className="text-sm">
-    <h1 className="text-[#4B1E2F] text-md font-semibold mb-4">Personal Information</h1>
+    <h1 className="text-[#4B1E2F] text-md font-semibold mb-4">
+      Personal Information
+    </h1>
     <div className="grid grid-cols-2 gap-4">
       <div>
         <label className="text-sm">First Name</label>
@@ -13,6 +13,7 @@ const PersonalInfo = ({ register, errors }) => (
         />
         {errors?.firstName && <p className="text-red-500 text-sm">Required</p>}
       </div>
+
       <div>
         <label className="text-sm">Last Name</label>
         <input
@@ -22,6 +23,7 @@ const PersonalInfo = ({ register, errors }) => (
         />
         {errors?.lastName && <p className="text-red-500 text-sm">Required</p>}
       </div>
+
       <div>
         <label className="text-sm">Date of Birth</label>
         <input
@@ -31,6 +33,7 @@ const PersonalInfo = ({ register, errors }) => (
         />
         {errors?.dob && <p className="text-red-500 text-sm">Required</p>}
       </div>
+
       <div>
         <label className="text-sm">Gender</label>
         <select
@@ -38,9 +41,9 @@ const PersonalInfo = ({ register, errors }) => (
           className="w-full border-2 border-zinc-300 rounded-md p-3.5 mt-2 outline-none"
         >
           <option value="">Select</option>
-          <option>male</option>
-          <option>female</option>
-          <option>other</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
         </select>
         {errors?.gender && <p className="text-red-500 text-sm">Required</p>}
       </div>

@@ -1,4 +1,3 @@
-// Admin.jsx
 import { LayoutDashboard, LogOut, Settings, Menu } from "lucide-react";
 import React, { useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
@@ -59,7 +58,6 @@ const Admin = () => {
         </button>
       </div>
 
-      {/* Overlay */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 bg-black opacity-50 z-40 md:hidden"

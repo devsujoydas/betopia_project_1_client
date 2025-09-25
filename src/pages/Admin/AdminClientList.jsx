@@ -25,12 +25,11 @@ const AdminClientList = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState(null);
-
-  // Fetch once & cache
+ 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["clients"],
     queryFn: fetchClients,
-    staleTime: 5 * 60 * 1000, // 5 min cache
+    staleTime: 5 * 60 * 1000,
   });
 
   const clients = data?.users || [];
@@ -76,8 +75,7 @@ const AdminClientList = () => {
 
   const getScoreText = (score) =>
     score >= 75 ? "High" : score >= 50 ? "Medium" : "Low";
-
-  // Apply filters + tab locally
+ 
   const filteredClients = useMemo(() => {
     return clients.filter((c) => {
       const cityMatch = filters.city

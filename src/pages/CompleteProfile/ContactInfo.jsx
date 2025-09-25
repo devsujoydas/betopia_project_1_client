@@ -1,8 +1,9 @@
-import React from "react";
-
 const ContactInfo = ({ register, errors }) => (
   <div className="space-y-4 text-sm font-medium">
-    <h1 className="text-[#4B1E2F] text-md font-semibold mb-4">Contact Information</h1>
+    <h1 className="text-[#4B1E2F] text-md font-semibold mb-4">
+      Contact Information
+    </h1>
+
     <div>
       <label>Address</label>
       <input
@@ -12,8 +13,9 @@ const ContactInfo = ({ register, errors }) => (
       />
       {errors.address && <p className="text-red-500 text-sm">Required</p>}
     </div>
+
     <div className="grid grid-cols-3 gap-4">
-      <div className="grid gap-1">
+      <div>
         <label>City</label>
         <input
           {...register("city", { required: true })}
@@ -22,7 +24,8 @@ const ContactInfo = ({ register, errors }) => (
         />
         {errors.city && <p className="text-red-500 text-sm">Required</p>}
       </div>
-      <div className="grid gap-1">
+
+      <div>
         <label>State</label>
         <input
           {...register("state", { required: true })}
@@ -31,7 +34,8 @@ const ContactInfo = ({ register, errors }) => (
         />
         {errors.state && <p className="text-red-500 text-sm">Required</p>}
       </div>
-      <div className="grid gap-1">
+
+      <div>
         <label>Zip</label>
         <input
           {...register("zipCode", { required: true })}

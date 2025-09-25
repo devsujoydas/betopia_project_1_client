@@ -34,7 +34,6 @@ const CoreValueCard = ({ icon: Icon, title, description, index }) => {
   );
 };
  
-// Main Component
 const OurCoreValues = () => {
   const coreValuesData = [
     {

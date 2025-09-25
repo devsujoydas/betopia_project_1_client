@@ -1,4 +1,4 @@
-// routes/ProtectedRoute.jsx
+
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../AuthProvider/AuthProvider";
 
@@ -15,7 +15,6 @@ export default function ProtectedRoute({ children }) {
   }
 
   if (!user) {
-    // 🛑 user না থাকলে signin এ redirect
     return <Navigate to="/auth/signin" state={{ from: location }} replace />;
   }
 

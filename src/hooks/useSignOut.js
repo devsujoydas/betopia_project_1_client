@@ -1,4 +1,3 @@
-// hooks/useSignOut.js
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import api from "../utils/api";
@@ -12,7 +11,6 @@ export default function useSignOut() {
     try {
       await api.post("/auth/signout");
       
-      // 🟢 Clear context + localStorage
       setUser(null);
       localStorage.removeItem("user");
 

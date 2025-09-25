@@ -17,7 +17,6 @@ export default function UploadProfilePicture({
   const [loading, setLoading] = useState(false);
   const modalRef = useRef(null);
 
-  // Close modal on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -48,7 +47,6 @@ export default function UploadProfilePicture({
 
   const handleDragOver = (e) => e.preventDefault();
 
-  // Upload local file
   const uploadFile = async () => {
     if (!file) return toast.error("Please select a file first!");
     setLoading(true);
@@ -67,7 +65,6 @@ export default function UploadProfilePicture({
       const finalUrl = data.data.url;
       toast.success("Uploaded Successfully!");
 
-      // Update backend
       await api
         .put(
           `/users/update-profilePicture`,
@@ -78,7 +75,6 @@ export default function UploadProfilePicture({
           console.log(res.data);
         });
 
-      // Update frontend auth context
       setUser({
         ...user,
         personalInfo: { ...user.personalInfo, profilePhotoUrl: finalUrl },
@@ -93,7 +89,6 @@ export default function UploadProfilePicture({
     }
   };
 
-  // Upload by URL
   const uploadByUrl = async () => {
     if (!url) return toast.error("Please enter a valid URL!");
     setLoading(true);
@@ -226,7 +221,7 @@ export default function UploadProfilePicture({
             <button
               onClick={uploadByUrl}
               disabled={loading}
-              className="px-4 py-2 bg-gray-100 rounded-lg text-gray-700 hover:bg-gray-200 text-sm"
+              className="px-4 cursor-pointer py-2 bg-gray-100 rounded-lg text-gray-700 hover:bg-gray-200 text-sm"
             >
               {loading ? "Uploading..." : "Upload"}
             </button>
@@ -248,7 +243,7 @@ export default function UploadProfilePicture({
             <button
               onClick={uploadFile}
               disabled={loading}
-              className="px-5 py-2 rounded-lg bg-[#4b1e2f] text-white hover:bg-[#6b0527] cursor-pointer text-sm transition-all"
+              className="px-5 cursor-pointer py-2 rounded-lg bg-[#4b1e2f] text-white hover:bg-[#6b0527] cursor-pointer text-sm transition-all"
             >
               {loading ? "Uploading..." : "Import"}
             </button>

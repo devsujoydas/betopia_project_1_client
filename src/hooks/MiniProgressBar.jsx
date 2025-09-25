@@ -12,7 +12,7 @@ const smallArc = 36;
 const bigArc = 81;
 const segmentSizes = [smallArc, smallArc, bigArc, smallArc, smallArc];
 
-const ProgressBar = ({ value }) => {
+const MiniProgressBar = ({ value }) => {
   const segmentStarts = segmentSizes.reduce((acc, size, i) => {
     if (i === 0) acc.push(ARC_START_ANGLE);
     else acc.push(acc[i - 1] + segmentSizes[i - 1] + gapDeg);
@@ -158,4 +158,4 @@ const ProgressBar = ({ value }) => {
   );
 };
 
-export default ProgressBar;
+export default MiniProgressBar;

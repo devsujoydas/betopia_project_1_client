@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Calendar,
   CreditCard,
@@ -10,6 +10,8 @@ import {
   Phone,
   X,
 } from "lucide-react";
+import ProgressBar from "../../hooks/ProgressBar";
+import MiniProgressBar from "../../hooks/MiniProgressBar";
 
 export default function ClientDetailsModal({ isOpen, onClose, info }) {
   const [decision, setDecision] = useState(null);
@@ -23,6 +25,19 @@ export default function ClientDetailsModal({ isOpen, onClose, info }) {
     rejectReason: "",
     notes: "",
   });
+
+  const modalRef = useRef(null);
+
+  // Close modal on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+    if (isOpen) document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -44,26 +59,31 @@ export default function ClientDetailsModal({ isOpen, onClose, info }) {
 
   return (
     <div className="fixed animate-fadein inset-0 flex items-center justify-center z-50 bg-black/50">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto p-6 relative">
+      <div
+        ref={modalRef}
+        className="bg-white rounded-lg shadow-lg w-full max-w-6xl max-h-[90vh] overflow-y-auto relative"
+      >
+        {/* Top Banner */}
+        <div className="flex justify-between items-center rounded-t-lg p-6 bg-[#F5F5F5] border-b">
+          <h3 className="font-semibold text-lg">Client Details</h3>
+          <button
+            onClick={() => setDecision(null)}
+            className="text-sm hover:underline transition-all cursor-pointer flex items-center gap-2"
+          >
+            <Download/> Export
+          </button>
+        </div>
+
         {/* Close Button */}
-        <button
+        {/* <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
         >
           <X size={20} />
-        </button>
-
-        {/* Header */}
-        <div className="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center border-b pb-4">
-          <h1 className="text-2xl font-bold text-gray-800">Client Details</h1>
-          <button className="flex items-center gap-1 text-md cursor-pointer">
-            <Download />
-            <span> Export</span>
-          </button>
-        </div>
+        </button> */}
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
           {/* Left Column */}
           <div className="md:col-span-2 space-y-6">
             {/* Credit Passport */}
@@ -71,7 +91,7 @@ export default function ClientDetailsModal({ isOpen, onClose, info }) {
               <h2 className="text-lg font-semibold mb-4">Credit Passport</h2>
               <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
                 <img
-                  src="https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg"
+                  src={info?.personalInfo?.profilePhotoUrl || "/default.jpg"}
                   alt="User"
                   className="w-16 h-16 rounded-full"
                 />
@@ -112,15 +132,12 @@ export default function ClientDetailsModal({ isOpen, onClose, info }) {
 
             {/* Financial Info */}
             <div className="bg-gray-50 p-4 rounded-md shadow-sm">
-              <h2 className="text-lg font-semibold mb-4">
-                Financial Information
-              </h2>
+              <h2 className="text-lg font-semibold mb-4">Financial Information</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-700">
                 <div className="flex items-center gap-1">
                   <DollarSign size={16} />
                   <p>
-                    <strong>Annual Income:</strong>{" "}
-                    {info?.annualInfo?.annualIncome}
+                    <strong>Annual Income:</strong> {info?.annualInfo?.annualIncome}
                   </p>
                 </div>
                 <div className="flex items-center gap-1">
@@ -188,10 +205,7 @@ export default function ClientDetailsModal({ isOpen, onClose, info }) {
                     placeholder="Interest Rate (%)"
                     value={approveForm.interestRate}
                     onChange={(e) =>
-                      setApproveForm({
-                        ...approveForm,
-                        interestRate: e.target.value,
-                      })
+                      setApproveForm({ ...approveForm, interestRate: e.target.value })
                     }
                     className="w-full p-2 border rounded"
                   />
@@ -248,10 +262,8 @@ export default function ClientDetailsModal({ isOpen, onClose, info }) {
 
           {/* Right Column */}
           <div>
-            {/* এখানে চাইলে আলাদা details রাখতে পারো */}
             <div className="bg-gray-100 p-4 rounded-md">
-              <h2 className="font-semibold mb-2">Extra Info</h2>
-              <p>More client details here...</p>
+              <MiniProgressBar value={info.financialInfo.creditScore}/>
             </div>
           </div>
         </div>

@@ -1,4 +1,3 @@
-// frontend/src/AuthProvider/AuthProvider.jsx
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import api from "../utils/api";
@@ -16,7 +15,6 @@ const fetchProfile = async () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  // 🟢 First load from localStorage if exists
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
@@ -35,19 +33,18 @@ export const AuthProvider = ({ children }) => {
     refetchOnWindowFocus: false,
   });
 
-  // 🟢 Whenever API gives new data, update state + localStorage
   useEffect(() => {
     if (data !== undefined) {
       setUser(data);
+      console.log(data)
       if (data) {
         localStorage.setItem("user", JSON.stringify(data));
       } else {
-        localStorage.removeItem("user"); // clear if null
+        localStorage.removeItem("user");
       }
     }
   }, [data]);
 
-  // 🟢 Keep localStorage synced if setUser is called manually
   useEffect(() => {
     if (user) {
       localStorage.setItem("user", JSON.stringify(user));

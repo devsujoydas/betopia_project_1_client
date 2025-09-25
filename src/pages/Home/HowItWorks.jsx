@@ -1,4 +1,4 @@
-import React from "react";
+ 
 import {
   Users,
   FileText,
@@ -8,7 +8,6 @@ import {
 import { motion } from "framer-motion";
 import HeadingPart from "./HeadingPart";
 
-// Card Component
 const StepCard = ({ icon: Icon, title, description, index }) => {
   return (
     <motion.div
@@ -35,8 +34,7 @@ const StepCard = ({ icon: Icon, title, description, index }) => {
     </motion.div>
   );
 };
-
-// Main Component
+ 
 const HowItWorks = () => {
   // Icon mapping based on step
   const iconMap = {

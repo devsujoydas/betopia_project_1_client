@@ -26,9 +26,9 @@ const Signin = () => {
         password: data.password,
       })
       .then(res=>{ 
+        navigate("/account")
         setUser(res.data)
         toast.success("Logged in successfully!");
-        navigate("/account")
       })
     } catch (err) {
       toast.error(err?.response?.data?.message || "Server error");
